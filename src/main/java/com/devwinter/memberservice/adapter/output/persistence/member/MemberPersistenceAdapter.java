@@ -41,6 +41,12 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     @Override
     public void updatePassword(Member member) {
         MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
-        memberJpaEntity.updatePassword(member.getPassword());
+        memberJpaEntity.updatePassword(member);
+    }
+
+    @Override
+    public void delete(Member member) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
+        memberJpaEntity.delete(member);
     }
 }
