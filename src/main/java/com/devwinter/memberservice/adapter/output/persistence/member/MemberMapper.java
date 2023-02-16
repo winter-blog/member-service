@@ -12,22 +12,27 @@ public class MemberMapper {
                 member.getNickName(),
                 member.getEmail(),
                 member.getPassword(),
-                null,
-                (member.getProfile() == null) ? null : member.getProfile().getPath()
+                member.getLastPasswordChangedAt(),
+                (member.getProfile() == null) ? null : member.getProfile().getPath(),
+                member.isDeleted(),
+                member.getDeletedAt()
         );
     }
 
     public Member entityToDomain(MemberJpaEntity memberJpaEntity) {
-        if(memberJpaEntity == null) {
+        if (memberJpaEntity == null) {
             return null;
         }
 
-        return Member.withId(
-                new Member.MemberId(memberJpaEntity.getId()),
-                memberJpaEntity.getNickName(),
-                memberJpaEntity.getEmail(),
-                memberJpaEntity.getPassword(),
-                new Profile(memberJpaEntity.getProfile())
-        );
+        return Member.builder()
+                     .id(new Member.MemberId(memberJpaEntity.getId()))
+                     .nickName(memberJpaEntity.getNickName())
+                     .email(memberJpaEntity.getEmail())
+                     .password(memberJpaEntity.getPassword())
+                     .lastPasswordChangedAt(memberJpaEntity.getLastPasswordChangedAt())
+                     .profile(new Profile(memberJpaEntity.getProfile()))
+                     .deleted(memberJpaEntity.isDeleted())
+                     .deletedAt(memberJpaEntity.getDeletedAt())
+                     .build();
     }
 }

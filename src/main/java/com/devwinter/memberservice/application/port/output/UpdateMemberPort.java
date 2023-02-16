@@ -4,4 +4,5 @@ import com.devwinter.memberservice.domain.Member;
 
 public interface UpdateMemberPort {
     void updatePassword(Member member);
+    void delete(Member member);
 }

@@ -1,6 +1,5 @@
 package com.devwinter.memberservice.application.service;
 
-import com.devwinter.memberservice.application.exception.MemberErrorCode;
 import com.devwinter.memberservice.application.exception.MemberException;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
