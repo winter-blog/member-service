@@ -12,6 +12,7 @@ public class MemberMapper {
                 member.getNickName(),
                 member.getEmail(),
                 member.getPassword(),
+                null,
                 (member.getProfile() == null) ? null : member.getProfile().getPath()
         );
     }

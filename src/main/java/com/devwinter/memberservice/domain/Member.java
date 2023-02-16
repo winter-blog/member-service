@@ -1,5 +1,6 @@
 package com.devwinter.memberservice.domain;
 
+import com.devwinter.memberservice.application.exception.MemberException;
 import lombok.*;
 
 
@@ -32,6 +33,9 @@ public class Member {
                      .build();
     }
 
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 
     public record MemberId(Long value) {
     }
