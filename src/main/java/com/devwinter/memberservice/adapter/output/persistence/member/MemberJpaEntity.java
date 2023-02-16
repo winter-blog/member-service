@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -21,5 +22,11 @@ public class MemberJpaEntity extends BaseTimeEntity {
     private String nickName;
     private String email;
     private String password;
+    private LocalDateTime lastPasswordChangedAt;
     private String profile;
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+        this.lastPasswordChangedAt = LocalDateTime.now();
+    }
 }
