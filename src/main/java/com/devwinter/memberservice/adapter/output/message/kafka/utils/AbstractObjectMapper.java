@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.kafka.utils;
+package com.devwinter.memberservice.adapter.output.message.kafka.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,4 +15,6 @@ public abstract class AbstractObjectMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public abstract String getTopics();
 }

@@ -1,10 +1,10 @@
-package com.devwinter.memberservice.adapter.output.persistence.kafka.utils;
+package com.devwinter.memberservice.adapter.output.message.kafka.utils;
 
-import com.devwinter.memberservice.adapter.output.persistence.kafka.dto.Field;
-import com.devwinter.memberservice.adapter.output.persistence.kafka.dto.KafkaDto;
-import com.devwinter.memberservice.adapter.output.persistence.kafka.dto.MemberChangePasswordPayload;
-import com.devwinter.memberservice.adapter.output.persistence.kafka.dto.Schema;
-import com.devwinter.memberservice.application.port.output.MemberPasswordEditHistoryPort;
+import com.devwinter.memberservice.adapter.output.message.kafka.dto.common.Field;
+import com.devwinter.memberservice.adapter.output.message.kafka.dto.common.KafkaMessage;
+import com.devwinter.memberservice.adapter.output.message.kafka.dto.payload.MemberChangePasswordPayload;
+import com.devwinter.memberservice.adapter.output.message.kafka.dto.common.Schema;
+import com.devwinter.memberservice.application.port.output.history.MemberPasswordEditHistoryPort;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +12,18 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class MemberChangePasswordSchemaMapper extends AbstractObjectMapper {
-    public MemberChangePasswordSchemaMapper(ObjectMapper mapper) {
+public class MemberChangePasswordSchema extends AbstractObjectMapper {
+    public MemberChangePasswordSchema(ObjectMapper mapper) {
         super(mapper);
     }
 
+    @Override
+    public String getTopics() {
+        return "member_password_edit_history";
+    }
+
     public String createMessage(MemberPasswordEditHistoryPort.MemberPasswordEditHistoryCommand command) {
-        return getMessage(new KafkaDto(createSchema(), createPayload(command)));
+        return getMessage(new KafkaMessage<>(createSchema(), createPayload(command)));
     }
 
     private Schema createSchema() {
@@ -32,7 +37,7 @@ public class MemberChangePasswordSchemaMapper extends AbstractObjectMapper {
                      .type("struct")
                      .fields(fields)
                      .optional(false)
-                     .name("member_password_edit_history")
+                     .name(getTopics())
                      .build();
     }
 

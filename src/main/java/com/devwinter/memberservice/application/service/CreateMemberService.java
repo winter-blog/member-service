@@ -7,6 +7,7 @@ import com.devwinter.memberservice.application.port.output.SaveMemberPort;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;
+import com.devwinter.memberservice.domain.factory.MemberFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class CreateMemberService implements CreateMemberUseCase {
                                                  .orElseThrow(() -> new MemberException(TEMPLATE_PROFILE_IMAGE_NOT_FOUND));
 
         String encrypt = passwordEncoder.encode(command.password());
-        Member member = Member.withoutId(command.nickName(), command.email(), encrypt, profile);
+        Member member = MemberFactory.withoutId(command.nickName(), command.email(), encrypt, profile);
         return saveMemberPort.save(member).getId().value();
     }
 }

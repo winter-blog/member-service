@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.jpa.member;
+package com.devwinter.memberservice.adapter.output.persistence.member;
 
 import com.devwinter.memberservice.application.port.output.DeleteMemberPort;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;

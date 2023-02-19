@@ -1,6 +1,7 @@
 package com.devwinter.memberservice.application.service;
 
 import com.devwinter.memberservice.application.port.output.DeleteMemberPort;
+import com.devwinter.memberservice.application.port.output.history.DeleteMemberHistoryPort;
 import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.application.port.input.DeleteMemberUseCase;
@@ -17,6 +18,7 @@ public class DeleteMemberService implements DeleteMemberUseCase {
 
     private final LoadMemberPort loadMemberPort;
     private final DeleteMemberPort deleteMemberPort;
+    private final DeleteMemberHistoryPort deleteMemberHistoryPort;
 
     @Override
     @Transactional
@@ -25,5 +27,7 @@ public class DeleteMemberService implements DeleteMemberUseCase {
                                       .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
         member.delete();
         deleteMemberPort.delete(member);
+
+        // deleteMemberHistoryPort.send(memberId);
     }
 }

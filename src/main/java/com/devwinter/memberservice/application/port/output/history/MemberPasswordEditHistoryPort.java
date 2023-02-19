@@ -1,8 +1,7 @@
-package com.devwinter.memberservice.application.port.output;
+package com.devwinter.memberservice.application.port.output.history;
 
 import com.devwinter.memberservice.domain.Member;
 
-import java.time.LocalDateTime;
 
 public interface MemberPasswordEditHistoryPort {
 
