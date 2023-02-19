@@ -1,5 +1,6 @@
 package com.devwinter.memberservice.application.service;
 
+import com.devwinter.memberservice.application.port.output.DeleteMemberPort;
 import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.application.port.input.DeleteMemberUseCase;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteMemberService implements DeleteMemberUseCase {
 
     private final LoadMemberPort loadMemberPort;
-    private final UpdatePasswordMemberPort updatePasswordMemberPort;
+    private final DeleteMemberPort deleteMemberPort;
 
     @Override
     @Transactional
@@ -23,6 +24,6 @@ public class DeleteMemberService implements DeleteMemberUseCase {
         Member member = loadMemberPort.findById(memberId)
                                       .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
         member.delete();
-        updatePasswordMemberPort.delete(member);
+        deleteMemberPort.delete(member);
     }
 }
