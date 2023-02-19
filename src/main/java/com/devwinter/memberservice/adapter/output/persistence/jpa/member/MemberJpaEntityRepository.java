@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.jpa.member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

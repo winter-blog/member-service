@@ -4,6 +4,6 @@ import com.devwinter.memberservice.domain.Profile;
 
 import java.util.Optional;
 
-public interface LoadProfilePort {
-    Optional<Profile> getRandomProfile();
+public interface LoadTemplateProfilePort {
+    Optional<Profile> getRandomDefaultProfile();
 }

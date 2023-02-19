@@ -7,6 +7,7 @@ import com.devwinter.memberservice.adapter.input.api.dto.EditPasswordMember;
 import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
 import com.devwinter.memberservice.application.port.input.DeleteMemberUseCase;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase;
+import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class MemberApiController {
     public BaseResponse<EditPasswordMember.Response> editPassword(
             @RequestHeader("MemberId") Long memberId,
             @Valid @RequestBody EditPasswordMember.Request request) {
-        editPasswordMemberUseCase.editPassword(memberId, request.getNewPassword());
+        editPasswordMemberUseCase.editPassword(new EditPasswordMemberCommand(memberId, request.getPassword()));
         return EditPasswordMember.Response.success();
     }
 

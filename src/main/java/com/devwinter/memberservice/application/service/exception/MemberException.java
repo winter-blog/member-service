@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.application.exception;
+package com.devwinter.memberservice.application.service.exception;
 
 import lombok.Getter;
 

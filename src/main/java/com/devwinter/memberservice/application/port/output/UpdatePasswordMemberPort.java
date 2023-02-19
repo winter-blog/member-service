@@ -2,7 +2,6 @@ package com.devwinter.memberservice.application.port.output;
 
 import com.devwinter.memberservice.domain.Member;
 
-public interface UpdateMemberPort {
+public interface UpdatePasswordMemberPort {
     void updatePassword(Member member);
-    void delete(Member member);
 }

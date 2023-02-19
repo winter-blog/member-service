@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.profile;
+package com.devwinter.memberservice.adapter.output.persistence.jpa.templateprofile;
 
 import lombok.Getter;
 
@@ -8,8 +8,8 @@ import javax.persistence.Table;
 
 @Getter
 @Entity
-@Table(name = "profile")
-public class ProfileJpaEntity {
+@Table(name = "template_profile")
+public class TemplateProfileJpaEntity {
 
     @Id
     private Long id;

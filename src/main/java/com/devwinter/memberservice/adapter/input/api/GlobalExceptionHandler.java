@@ -1,7 +1,7 @@
 package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.BaseResponse;
-import com.devwinter.memberservice.application.exception.MemberException;
+import com.devwinter.memberservice.application.service.exception.MemberException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
