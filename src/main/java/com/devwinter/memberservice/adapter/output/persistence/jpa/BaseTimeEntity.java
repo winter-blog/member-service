@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence;
+package com.devwinter.memberservice.adapter.output.persistence.jpa;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

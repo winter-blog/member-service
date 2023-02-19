@@ -1,11 +1,13 @@
 package com.devwinter.memberservice.domain;
 
-import com.devwinter.memberservice.application.exception.MemberException;
-import lombok.*;
+import com.devwinter.memberservice.application.service.exception.MemberException;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
-
-import static com.devwinter.memberservice.application.exception.MemberErrorCode.MEMBER_ALREADY_DELETE;
+import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_ALREADY_DELETE;
+import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_PASSWORD_SAME;
 
 
 @Getter
@@ -16,10 +18,8 @@ public class Member {
     private String nickName;
     private String email;
     private String password;
-    private LocalDateTime lastPasswordChangedAt;
     private Profile profile;
     private boolean deleted;
-    private LocalDateTime deletedAt;
 
     public static Member withoutId(String nickName, String email, String password, Profile profile) {
         return Member.builder()
@@ -41,6 +41,10 @@ public class Member {
     }
 
     public void changePassword(String newPassword) {
+
+        if (this.password.equals(newPassword)) {
+            throw new MemberException(MEMBER_PASSWORD_SAME);
+        }
         this.password = newPassword;
     }
 

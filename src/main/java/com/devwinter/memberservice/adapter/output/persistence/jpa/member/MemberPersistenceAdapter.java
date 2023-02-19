@@ -1,8 +1,8 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.jpa.member;
 
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
 import com.devwinter.memberservice.application.port.output.SaveMemberPort;
-import com.devwinter.memberservice.application.port.output.UpdateMemberPort;
+import com.devwinter.memberservice.application.port.output.UpdatePasswordMemberPort;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdateMemberPort {
+public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort {
 
     private final MemberJpaEntityRepository memberRepository;
     private final MemberMapper memberMapper;
@@ -33,7 +33,7 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
 
     @Override
     public Member save(Member member) {
-        MemberJpaEntity memberJpaEntity = memberMapper.domainToEntity(member);
+        MemberJpaEntity memberJpaEntity = memberMapper.createEntity(member);
         memberJpaEntity = memberRepository.save(memberJpaEntity);
         return memberMapper.entityToDomain(memberJpaEntity);
     }
@@ -42,11 +42,5 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     public void updatePassword(Member member) {
         MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
         memberJpaEntity.updatePassword(member);
-    }
-
-    @Override
-    public void delete(Member member) {
-        MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
-        memberJpaEntity.delete(member);
     }
 }

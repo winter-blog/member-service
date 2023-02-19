@@ -2,10 +2,10 @@ package com.devwinter.memberservice.application.service;
 
 import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
-import com.devwinter.memberservice.application.port.output.LoadProfilePort;
+import com.devwinter.memberservice.application.port.output.LoadTemplateProfilePort;
 import com.devwinter.memberservice.application.port.output.SaveMemberPort;
-import com.devwinter.memberservice.application.exception.MemberErrorCode;
-import com.devwinter.memberservice.application.exception.MemberException;
+import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
+import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class CreateMemberServiceTest {
     @Mock
     private SaveMemberPort saveMemberPort;
     @Mock
-    private LoadProfilePort loadProfilePort;
+    private LoadTemplateProfilePort loadTemplateProfilePort;
     @Mock
     private PasswordEncoder passwordEncoder;
     @InjectMocks

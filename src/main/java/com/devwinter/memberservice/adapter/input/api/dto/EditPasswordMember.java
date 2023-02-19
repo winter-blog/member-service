@@ -8,7 +8,7 @@ public class EditPasswordMember {
     @Getter
     public static class Request {
         @Password
-        private String newPassword;
+        private String password;
     }
 
     @Getter
