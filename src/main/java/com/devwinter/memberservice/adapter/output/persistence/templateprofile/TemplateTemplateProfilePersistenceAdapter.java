@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.jpa.templateprofile;
+package com.devwinter.memberservice.adapter.output.persistence.templateprofile;
 
 import com.devwinter.memberservice.application.port.output.LoadTemplateProfilePort;
 import com.devwinter.memberservice.domain.Profile;

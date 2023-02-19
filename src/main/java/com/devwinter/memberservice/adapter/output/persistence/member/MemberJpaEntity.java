@@ -1,6 +1,6 @@
-package com.devwinter.memberservice.adapter.output.persistence.jpa.member;
+package com.devwinter.memberservice.adapter.output.persistence.member;
 
-import com.devwinter.memberservice.adapter.output.persistence.jpa.BaseTimeEntity;
+import com.devwinter.memberservice.adapter.output.persistence.BaseTimeEntity;
 import com.devwinter.memberservice.domain.Member;
 import lombok.*;
 

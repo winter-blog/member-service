@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.kafka.dto;
+package com.devwinter.memberservice.adapter.output.message.kafka.dto.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

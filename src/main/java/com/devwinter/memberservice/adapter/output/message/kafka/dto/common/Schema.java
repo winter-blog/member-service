@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.kafka.dto;
+package com.devwinter.memberservice.adapter.output.message.kafka.dto.common;
 
 import lombok.Builder;
 import lombok.Data;

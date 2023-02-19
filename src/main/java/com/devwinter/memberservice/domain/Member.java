@@ -21,27 +21,7 @@ public class Member {
     private Profile profile;
     private boolean deleted;
 
-    public static Member withoutId(String nickName, String email, String password, Profile profile) {
-        return Member.builder()
-                     .nickName(nickName)
-                     .email(email)
-                     .password(password)
-                     .profile(profile)
-                     .build();
-    }
-
-    public static Member withId(MemberId id, String nickName, String email, String password, Profile profile) {
-        return Member.builder()
-                     .id(id)
-                     .nickName(nickName)
-                     .email(email)
-                     .password(password)
-                     .profile(profile)
-                     .build();
-    }
-
     public void changePassword(String newPassword) {
-
         if (this.password.equals(newPassword)) {
             throw new MemberException(MEMBER_PASSWORD_SAME);
         }

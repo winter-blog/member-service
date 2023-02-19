@@ -3,7 +3,7 @@ package com.devwinter.memberservice.application.service;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
-import com.devwinter.memberservice.application.port.output.MemberPasswordEditHistoryPort;
+import com.devwinter.memberservice.application.port.output.history.MemberPasswordEditHistoryPort;
 import com.devwinter.memberservice.application.port.output.UpdatePasswordMemberPort;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
