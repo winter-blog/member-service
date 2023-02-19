@@ -1,5 +1,6 @@
 package com.devwinter.memberservice.adapter.output.persistence.jpa.member;
 
+import com.devwinter.memberservice.application.port.output.DeleteMemberPort;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
 import com.devwinter.memberservice.application.port.output.SaveMemberPort;
 import com.devwinter.memberservice.application.port.output.UpdatePasswordMemberPort;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort {
+public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort, DeleteMemberPort {
 
     private final MemberJpaEntityRepository memberRepository;
     private final MemberMapper memberMapper;
@@ -42,5 +43,11 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     public void updatePassword(Member member) {
         MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
         memberJpaEntity.updatePassword(member);
+    }
+
+    @Override
+    public void delete(Member member) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
+        memberJpaEntity.delete(member);
     }
 }

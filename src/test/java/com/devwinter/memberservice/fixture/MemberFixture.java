@@ -10,7 +10,7 @@ public class MemberFixture {
                 "nickName",
                 "email",
                 "password",
-                new Profile("profile.png")
+                new Profile(new Member.MemberId(1L), "profile.png", Profile.ProfileType.DEFAULT)
         );
     }
 }
