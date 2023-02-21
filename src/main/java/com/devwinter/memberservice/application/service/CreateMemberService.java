@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.*;
+import java.util.Objects;
+
+import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_DUPLICATE_EXCEPTION;
+import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.TEMPLATE_PROFILE_IMAGE_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -25,15 +28,17 @@ public class CreateMemberService implements CreateMemberUseCase {
 
     @Override
     public Long createMember(CreateMemberCommand command) {
-        loadMemberPort.findByEmail(command.email()).ifPresent(m -> {
+        if (loadMemberPort.existByEmail(command.email())) {
             throw new MemberException(MEMBER_DUPLICATE_EXCEPTION);
-        });
+        }
 
         Profile profile = loadTemplateProfilePort.getRandomDefaultProfile()
                                                  .orElseThrow(() -> new MemberException(TEMPLATE_PROFILE_IMAGE_NOT_FOUND));
 
         String encrypt = passwordEncoder.encode(command.password());
         Member member = MemberFactory.withoutId(command.nickName(), command.email(), encrypt, profile);
-        return saveMemberPort.save(member).getId().value();
+        return saveMemberPort.save(member)
+                             .getId()
+                             .value();
     }
 }

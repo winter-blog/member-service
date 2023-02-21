@@ -45,7 +45,7 @@ class CreateMemberServiceTest {
         CreateMemberUseCase.CreateMemberCommand command = CreateMemberCommandFixture.complete();
 
         given(loadMemberPort.findByEmail(anyString()))
-                .willReturn(Optional.of(mock(Member.class)));
+                .willReturn(mock(Member.class));
 
         // when
         MemberException e = assertThrows(MemberException.class, () ->
