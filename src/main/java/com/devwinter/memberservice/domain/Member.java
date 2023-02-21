@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ public class Member {
     private String nickName;
     private String email;
     private String password;
-    private Profile profile;
+    private ProfileCollection profiles;
     private boolean deleted;
 
     public void changePassword(String newPassword) {
@@ -43,6 +45,15 @@ public class Member {
         }
         this.nickName = nickName;
     }
+
+    public void addProfile(Profile profile) {
+        if(this.profiles == null) {
+            this.profiles = new ProfileCollection(new ArrayList<>());
+        }
+        this.profiles.addProfile(profile);
+    }
+
+
     public record MemberId(Long value) {
     }
 }
