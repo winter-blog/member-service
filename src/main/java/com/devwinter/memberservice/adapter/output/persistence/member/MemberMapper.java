@@ -10,6 +10,10 @@ public class MemberMapper {
         return new MemberJpaEntity(member);
     }
 
+    public MemberJpaEntity domainToEntity(Member member) {
+        return new MemberJpaEntity(member);
+    }
+
     public Member entityToDomain(MemberJpaEntity memberJpaEntity) {
         if (memberJpaEntity == null) {
             return null;

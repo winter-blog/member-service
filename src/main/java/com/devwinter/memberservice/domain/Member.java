@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_ALREADY_DELETE;
-import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_PASSWORD_SAME;
+import java.util.Objects;
+import java.util.UUID;
+
+import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.*;
 
 
 @Getter
@@ -35,6 +37,12 @@ public class Member {
         this.deleted = true;
     }
 
+    public void editInfo(String nickName) {
+        if(this.nickName.equals(nickName)) {
+            throw new MemberException(MEMBER_NICKNAME_SAME);
+        }
+        this.nickName = nickName;
+    }
     public record MemberId(Long value) {
     }
 }

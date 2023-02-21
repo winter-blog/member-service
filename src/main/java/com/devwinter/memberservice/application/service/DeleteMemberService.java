@@ -18,13 +18,12 @@ public class DeleteMemberService implements DeleteMemberUseCase {
 
     private final LoadMemberPort loadMemberPort;
     private final DeleteMemberPort deleteMemberPort;
-    private final DeleteMemberHistoryPort deleteMemberHistoryPort;
+    // private final DeleteMemberHistoryPort deleteMemberHistoryPort;
 
     @Override
     @Transactional
     public void delete(Long memberId) {
-        Member member = loadMemberPort.findById(memberId)
-                                      .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        Member member = loadMemberPort.findById(memberId);
         member.delete();
         deleteMemberPort.delete(member);
 

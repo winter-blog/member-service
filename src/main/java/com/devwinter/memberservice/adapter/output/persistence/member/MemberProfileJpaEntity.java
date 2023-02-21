@@ -28,7 +28,10 @@ public class MemberProfileJpaEntity {
         this.profileType = profile.getType();
     }
 
-    public void updateProfile() {
-
+    public void updateProfile(Profile profile) {
+        if(!this.path.equals(profile.getPath())) {
+            this.path = profile.getPath();
+            this.profileType = profile.getType();
+        }
     }
 }

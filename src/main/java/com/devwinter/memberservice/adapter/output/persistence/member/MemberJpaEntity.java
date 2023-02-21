@@ -25,6 +25,9 @@ public class MemberJpaEntity extends BaseTimeEntity {
     private MemberProfileJpaEntity memberProfileJpaEntity;
 
     public MemberJpaEntity(Member member) {
+        if(member.getId() != null) {
+            this.id = member.getId().value();
+        }
         this.nickName = member.getNickName();
         this.email = member.getEmail();
         this.password = member.getPassword();
@@ -35,6 +38,12 @@ public class MemberJpaEntity extends BaseTimeEntity {
     public void updatePassword(Member member) {
         if (!this.password.equals(member.getPassword())) {
             this.password = member.getPassword();
+        }
+    }
+
+    public void updateInfo(Member member) {
+        if(!this.nickName.equals(member.getNickName())) {
+            this.nickName = member.getNickName();
         }
     }
 

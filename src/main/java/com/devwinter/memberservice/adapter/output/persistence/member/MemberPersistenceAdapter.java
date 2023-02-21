@@ -1,9 +1,8 @@
 package com.devwinter.memberservice.adapter.output.persistence.member;
 
-import com.devwinter.memberservice.application.port.output.DeleteMemberPort;
-import com.devwinter.memberservice.application.port.output.LoadMemberPort;
-import com.devwinter.memberservice.application.port.output.SaveMemberPort;
-import com.devwinter.memberservice.application.port.output.UpdatePasswordMemberPort;
+import com.devwinter.memberservice.application.port.output.*;
+import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
+import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,23 +12,30 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort, DeleteMemberPort {
+public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort, DeleteMemberPort, UpdateInfoMemberPort {
 
     private final MemberJpaEntityRepository memberRepository;
     private final MemberMapper memberMapper;
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<Member> findById(Long memberId) {
-        MemberJpaEntity memberJpaEntity = memberRepository.findById(memberId).orElse(null);
-        return Optional.ofNullable(memberMapper.entityToDomain(memberJpaEntity));
+    public boolean existByEmail(String email) {
+        return memberRepository.existsByEmail(email);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Member> findByEmail(String email) {
-        MemberJpaEntity memberJpaEntity = memberRepository.findByEmail(email).orElse(null);
-        return Optional.ofNullable(memberMapper.entityToDomain(memberJpaEntity));
+    public Member findById(Long memberId) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findById(memberId)
+                                                          .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return memberMapper.entityToDomain(memberJpaEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Member findByEmail(String email) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findByEmail(email)
+                                                          .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
+        return memberMapper.entityToDomain(memberJpaEntity);
     }
 
     @Override
@@ -49,5 +55,11 @@ public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort,
     public void delete(Member member) {
         MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
         memberJpaEntity.delete(member);
+    }
+
+    @Override
+    public void update(Member member) {
+        MemberJpaEntity memberJpaEntity = memberRepository.findById(member.getId().value()).orElseThrow();
+        memberJpaEntity.updateInfo(member);
     }
 }
