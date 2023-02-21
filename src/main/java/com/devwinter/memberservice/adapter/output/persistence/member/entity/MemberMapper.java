@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.member.entity;
 
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;
@@ -25,8 +25,12 @@ public class MemberMapper {
                      .email(memberJpaEntity.getEmail())
                      .password(memberJpaEntity.getPassword())
                      .profiles(new ProfileCollection(memberJpaEntity.getProfiles().getProfiles().stream()
-                                                                    .map(p -> new Profile(p.getPath(), p.getProfileType()
-                                                                    )).collect(Collectors.toList())))
+                                                                    .map(p -> new Profile(
+                                                                            p.getId(),
+                                                                            p.getPath(),
+                                                                            p.getProfileType(),
+                                                                            p.getCreatedAt()))
+                                                                    .collect(Collectors.toList())))
                      .deleted(memberJpaEntity.isDeleted())
                      .build();
     }

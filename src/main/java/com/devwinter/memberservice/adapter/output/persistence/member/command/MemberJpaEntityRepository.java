@@ -1,5 +1,6 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.member.command;
 
+import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

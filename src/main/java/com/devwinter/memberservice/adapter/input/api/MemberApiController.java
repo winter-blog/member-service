@@ -1,12 +1,11 @@
 package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.*;
-import com.devwinter.memberservice.adapter.output.aws.DeleteProfileImageAdapter;
 import com.devwinter.memberservice.application.port.input.*;
 import com.devwinter.memberservice.application.port.input.AddMemberProfileUseCase.UploadMemberProfileCommand;
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase.EditInfoMemberCommand;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
-import com.devwinter.memberservice.domain.Profile;
+import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +22,7 @@ public class MemberApiController {
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final EditInfoMemberUseCase editInfoMemberUseCase;
     private final AddMemberProfileUseCase addMemberProfileUseCase;
+    private final MyPageMemberQuery myPageMemberQuery;
 
     @PostMapping
     public BaseResponse<CreateMember.Response> createMember(@Valid @RequestBody CreateMember.Request request) {
@@ -58,5 +58,12 @@ public class MemberApiController {
             @RequestPart("profile") MultipartFile profile) {
         addMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
         return AddProfileMember.Response.success();
+    }
+
+    @GetMapping("/my-page")
+    public BaseResponse<MemberMyPage.Response> myPage(
+            @RequestHeader("MemberId") Long memberId) {
+        MyPageMemberDto memberInfo = myPageMemberQuery.getMemberInfo(memberId);
+        return MemberMyPage.Response.success(memberInfo);
     }
 }

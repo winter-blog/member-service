@@ -14,6 +14,9 @@ public class BaseResponse<T> {
         return new BaseResponse<>(Result.success(message), body);
     }
 
+    public static <T> BaseResponse<T> success(T body) {
+        return new BaseResponse<>(Result.success(null), body);
+    }
     public static <T> BaseResponse<T> success(String message) {
         return new BaseResponse<>(Result.success(message), null);
     }
@@ -28,6 +31,7 @@ public class BaseResponse<T> {
     }
 
     @Getter
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Builder(access = AccessLevel.PROTECTED)
     public static class Result {
         private String status;
