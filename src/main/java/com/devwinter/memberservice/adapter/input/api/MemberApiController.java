@@ -2,11 +2,9 @@ package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.*;
 import com.devwinter.memberservice.adapter.output.aws.DeleteProfileImageAdapter;
-import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
-import com.devwinter.memberservice.application.port.input.DeleteMemberUseCase;
-import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase;
+import com.devwinter.memberservice.application.port.input.*;
+import com.devwinter.memberservice.application.port.input.AddMemberProfileUseCase.UploadMemberProfileCommand;
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase.EditInfoMemberCommand;
-import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
 import com.devwinter.memberservice.domain.Profile;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +22,7 @@ public class MemberApiController {
     private final EditPasswordMemberUseCase editPasswordMemberUseCase;
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final EditInfoMemberUseCase editInfoMemberUseCase;
+    private final AddMemberProfileUseCase addMemberProfileUseCase;
 
     @PostMapping
     public BaseResponse<CreateMember.Response> createMember(@Valid @RequestBody CreateMember.Request request) {
@@ -51,5 +50,13 @@ public class MemberApiController {
             @Valid @RequestBody EditInfoMember.Request request) {
         editInfoMemberUseCase.edit(new EditInfoMemberCommand(memberId, request.getNickName()));
         return EditInfoMember.Response.success();
+    }
+
+    @PostMapping("/upload-profile")
+    public BaseResponse<AddProfileMember.Response> addProfile(
+            @RequestHeader("MemberId") Long memberId,
+            @RequestPart("profile") MultipartFile profile) {
+        addMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
+        return AddProfileMember.Response.success();
     }
 }

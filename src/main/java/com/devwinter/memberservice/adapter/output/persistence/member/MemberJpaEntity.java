@@ -2,6 +2,8 @@ package com.devwinter.memberservice.adapter.output.persistence.member;
 
 import com.devwinter.memberservice.adapter.output.persistence.BaseTimeEntity;
 import com.devwinter.memberservice.domain.Member;
+import com.devwinter.memberservice.domain.Profile;
+import com.devwinter.memberservice.domain.ProfileCollection;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,8 +23,8 @@ public class MemberJpaEntity extends BaseTimeEntity {
     private String email;
     private String password;
     private boolean deleted;
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private MemberProfileJpaEntity memberProfileJpaEntity;
+    @Embedded
+    private MemberProfileCollectionJpaEntity profiles;
 
     public MemberJpaEntity(Member member) {
         if(member.getId() != null) {
@@ -32,7 +34,7 @@ public class MemberJpaEntity extends BaseTimeEntity {
         this.email = member.getEmail();
         this.password = member.getPassword();
         this.deleted = false;
-        this.memberProfileJpaEntity = new MemberProfileJpaEntity(this, member.getProfile());
+        addProfileCollection(member.getProfiles());
     }
 
     public void updatePassword(Member member) {
@@ -51,5 +53,18 @@ public class MemberJpaEntity extends BaseTimeEntity {
         if (member.isDeleted() && !this.deleted) {
             this.deleted = true;
         }
+    }
+
+    private void addProfileCollection(ProfileCollection profileCollection) {
+        if(this.profiles == null) {
+            this.profiles = new MemberProfileCollectionJpaEntity();
+        }
+        for (Profile profile : profileCollection.getProfiles()) {
+            this.profiles.addProfile(profile);
+        }
+    }
+
+    public void addProfile(Profile profile) {
+        this.profiles.addProfile(profile);
     }
 }

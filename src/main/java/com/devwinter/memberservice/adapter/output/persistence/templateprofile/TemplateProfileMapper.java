@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 public class TemplateProfileMapper {
 
     public Profile entityToDomain(TemplateProfileJpaEntity templateProfileJpaEntity) {
-        return (templateProfileJpaEntity == null) ? null : new Profile(null, templateProfileJpaEntity.getPath(), Profile.ProfileType.DEFAULT);
+        return (templateProfileJpaEntity == null) ? null : new Profile(templateProfileJpaEntity.getPath(), Profile.ProfileType.DEFAULT);
     }
 }

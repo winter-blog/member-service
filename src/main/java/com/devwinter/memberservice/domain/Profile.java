@@ -1,15 +1,18 @@
 package com.devwinter.memberservice.domain;
 
-import com.devwinter.memberservice.domain.Member.MemberId;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
-@AllArgsConstructor
 public class Profile {
-    private MemberId memberId;
-    private String path;
-    private ProfileType type;
+    private final String path;
+    private final ProfileType type;
+
+    public Profile(String path, ProfileType type) {
+        this.path = UUID.randomUUID() + "_" + path;
+        this.type = type;
+    }
 
     public enum ProfileType {
         DEFAULT,
