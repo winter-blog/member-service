@@ -3,6 +3,8 @@ package com.devwinter.memberservice.adapter.output.persistence.templateprofile;
 import com.devwinter.memberservice.domain.Profile;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class TemplateProfileMapper {
 

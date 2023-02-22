@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.member.entity;
 
 import com.devwinter.memberservice.adapter.output.persistence.BaseTimeEntity;
 import com.devwinter.memberservice.domain.Member;
@@ -60,11 +60,11 @@ public class MemberJpaEntity extends BaseTimeEntity {
             this.profiles = new MemberProfileCollectionJpaEntity();
         }
         for (Profile profile : profileCollection.getProfiles()) {
-            this.profiles.addProfile(profile);
+            this.profiles.addProfile(this, profile);
         }
     }
 
     public void addProfile(Profile profile) {
-        this.profiles.addProfile(profile);
+        this.profiles.addProfile(this, profile);
     }
 }

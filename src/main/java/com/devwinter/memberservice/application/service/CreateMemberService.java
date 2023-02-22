@@ -37,8 +37,6 @@ public class CreateMemberService implements CreateMemberUseCase {
 
         String encrypt = passwordEncoder.encode(command.password());
         Member member = MemberFactory.withoutId(command.nickName(), command.email(), encrypt, profile);
-        return saveMemberPort.save(member)
-                             .getId()
-                             .value();
+        return saveMemberPort.save(member).getId().value();
     }
 }

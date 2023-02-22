@@ -53,7 +53,6 @@ public class Member {
         this.profiles.addProfile(profile);
     }
 
-
     public record MemberId(Long value) {
     }
 }

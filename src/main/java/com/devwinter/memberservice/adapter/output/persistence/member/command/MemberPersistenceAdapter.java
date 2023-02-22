@@ -1,5 +1,7 @@
-package com.devwinter.memberservice.adapter.output.persistence.member;
+package com.devwinter.memberservice.adapter.output.persistence.member.command;
 
+import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
+import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberMapper;
 import com.devwinter.memberservice.application.port.output.*;
 import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
 import com.devwinter.memberservice.application.service.exception.MemberException;
