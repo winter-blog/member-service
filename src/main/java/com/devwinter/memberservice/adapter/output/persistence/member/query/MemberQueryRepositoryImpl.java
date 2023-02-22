@@ -23,8 +23,7 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                         .select(memberJpaEntity)
                         .from(memberJpaEntity)
                         .where(
-                                memberJpaEntity.id.eq(memberId),
-                                memberJpaEntity.deleted.isFalse()
+                                memberJpaEntity.id.eq(memberId)
                         )
                         .fetchOne()
         );
