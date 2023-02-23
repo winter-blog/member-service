@@ -2,7 +2,7 @@ package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.*;
 import com.devwinter.memberservice.application.port.input.*;
-import com.devwinter.memberservice.application.port.input.AddMemberProfileUseCase.UploadMemberProfileCommand;
+import com.devwinter.memberservice.application.port.input.UploadMemberProfileUseCase.UploadMemberProfileCommand;
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase.EditInfoMemberCommand;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
@@ -21,7 +21,7 @@ public class MemberApiController {
     private final EditPasswordMemberUseCase editPasswordMemberUseCase;
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final EditInfoMemberUseCase editInfoMemberUseCase;
-    private final AddMemberProfileUseCase addMemberProfileUseCase;
+    private final UploadMemberProfileUseCase uploadMemberProfileUseCase;
     private final MyPageMemberQuery myPageMemberQuery;
 
     @PostMapping
@@ -56,7 +56,7 @@ public class MemberApiController {
     public BaseResponse<AddProfileMember.Response> addProfile(
             @RequestHeader("MemberId") Long memberId,
             @RequestPart("profile") MultipartFile profile) {
-        addMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
+        uploadMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
         return AddProfileMember.Response.success();
     }
 

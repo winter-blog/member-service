@@ -14,16 +14,28 @@ public class Profile {
 
     public Profile(String path, ProfileType type) {
         this.id = null;
-        this.path = UUID.randomUUID() + "_" + path;
+        if(type == ProfileType.CUSTOM) {
+            this.path = generateUUIDPath(path);
+        } else {
+            this.path = path;
+        }
         this.type = type;
         this.createdAt = null;
     }
 
     public Profile(Long id, String path, ProfileType type, LocalDateTime createdAt) {
         this.id = id;
-        this.path = UUID.randomUUID() + "_" + path;
+        if(type == ProfileType.CUSTOM) {
+            this.path = generateUUIDPath(path);
+        } else {
+            this.path = path;
+        }
         this.type = type;
         this.createdAt = createdAt;
+    }
+
+    private String generateUUIDPath(String path) {
+        return UUID.randomUUID() + "_" + path;
     }
 
     public enum ProfileType {
