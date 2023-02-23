@@ -4,6 +4,7 @@ import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
 import com.devwinter.memberservice.application.port.output.LoadTemplateProfilePort;
 import com.devwinter.memberservice.application.port.output.SaveMemberPort;
+import com.devwinter.memberservice.application.port.output.UpdateMemberProfilePort;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;

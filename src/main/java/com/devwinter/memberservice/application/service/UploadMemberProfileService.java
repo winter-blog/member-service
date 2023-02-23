@@ -1,6 +1,6 @@
 package com.devwinter.memberservice.application.service;
 
-import com.devwinter.memberservice.application.port.input.AddMemberProfileUseCase;
+import com.devwinter.memberservice.application.port.input.UploadMemberProfileUseCase;
 import com.devwinter.memberservice.application.port.output.LoadMemberPort;
 import com.devwinter.memberservice.application.port.output.UpdateMemberProfilePort;
 import com.devwinter.memberservice.application.port.output.UploadProfileImagePort;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AddMemberProfileService implements AddMemberProfileUseCase {
+public class UploadMemberProfileService implements UploadMemberProfileUseCase {
 
     private final LoadMemberPort loadMemberPort;
     private final UpdateMemberProfilePort updateMemberProfilePort;
