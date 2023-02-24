@@ -1,7 +1,7 @@
 package com.devwinter.memberservice.application.service;
 
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase;
-import com.devwinter.memberservice.application.port.output.LoadMemberPort;
+import com.devwinter.memberservice.application.port.output.LoadMemberQueryPort;
 import com.devwinter.memberservice.application.port.output.UpdateInfoMemberPort;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EditInfoMemberService implements EditInfoMemberUseCase {
 
-    private final LoadMemberPort loadMemberPort;
+    private final LoadMemberQueryPort loadMemberQueryPort;
     private final UpdateInfoMemberPort updateInfoMemberPort;
 
     @Override
     public void edit(EditInfoMemberCommand command) {
-        Member member = loadMemberPort.findById(command.memberId());
+        Member member = loadMemberQueryPort.findByMemberId(command.memberId());
 
         member.editInfo(command.nickName());
         updateInfoMemberPort.updateMemberInfo(member);
