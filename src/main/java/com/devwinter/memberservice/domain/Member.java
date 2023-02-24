@@ -26,9 +26,6 @@ public class Member {
     private boolean deleted;
 
     public void changePassword(String newPassword) {
-        if (this.password.equals(newPassword)) {
-            throw new MemberException(MEMBER_PASSWORD_SAME);
-        }
         this.password = newPassword;
     }
 
