@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface MemberQueryRepository {
     Optional<MemberJpaEntity> findByMemberId(Long memberId);
+    Optional<MemberJpaEntity> findByMemberEmail(String email);
+    boolean existByEmail(String email);
 }

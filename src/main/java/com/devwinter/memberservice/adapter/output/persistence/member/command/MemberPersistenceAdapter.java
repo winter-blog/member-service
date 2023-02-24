@@ -13,31 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements LoadMemberPort, SaveMemberPort, UpdatePasswordMemberPort, DeleteMemberPort, UpdateInfoMemberPort, UpdateMemberProfilePort {
+public class MemberPersistenceAdapter implements SaveMemberPort, UpdatePasswordMemberPort, DeleteMemberPort, UpdateInfoMemberPort, UpdateMemberProfilePort {
 
     private final MemberJpaEntityRepository memberRepository;
     private final MemberMapper memberMapper;
-
-    @Override
-    public boolean existByEmail(String email) {
-        return memberRepository.existsByEmail(email);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Member findById(Long memberId) {
-        MemberJpaEntity memberJpaEntity = memberRepository.findById(memberId)
-                                                          .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
-        return memberMapper.entityToDomain(memberJpaEntity);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Member findByEmail(String email) {
-        MemberJpaEntity memberJpaEntity = memberRepository.findByEmail(email)
-                                                          .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));
-        return memberMapper.entityToDomain(memberJpaEntity);
-    }
 
     @Override
     public Member save(Member member) {

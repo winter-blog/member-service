@@ -1,7 +1,7 @@
 package com.devwinter.memberservice.application.service;
 
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase;
-import com.devwinter.memberservice.application.port.output.LoadMemberPort;
+import com.devwinter.memberservice.application.port.output.LoadMemberQueryPort;
 import com.devwinter.memberservice.application.port.output.UpdatePasswordMemberPort;
 import com.devwinter.memberservice.application.port.output.history.MemberPasswordEditHistoryPort;
 import com.devwinter.memberservice.application.service.exception.MemberException;
@@ -17,7 +17,7 @@ import static com.devwinter.memberservice.application.service.exception.MemberEr
 @RequiredArgsConstructor
 public class EditPasswordMemberService implements EditPasswordMemberUseCase {
 
-    private final LoadMemberPort loadMemberPort;
+    private final LoadMemberQueryPort loadMemberQueryPort;
     private final PasswordEncoder passwordEncoder;
     private final UpdatePasswordMemberPort updatePasswordMemberPort;
     private final MemberPasswordEditHistoryPort memberPasswordEditHistoryPort;
@@ -25,7 +25,7 @@ public class EditPasswordMemberService implements EditPasswordMemberUseCase {
     @Override
     @Transactional
     public void editPassword(EditPasswordMemberCommand command) {
-        Member member = loadMemberPort.findById(command.memberId());
+        Member member = loadMemberQueryPort.findByMemberId(command.memberId());
 
         String originalPassword = member.getPassword();
 
