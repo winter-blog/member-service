@@ -20,7 +20,9 @@ public class BaseResponse<T> {
     public static <T> BaseResponse<T> success(String message) {
         return new BaseResponse<>(Result.success(message), null);
     }
-
+    public static <Void> BaseResponse<Void> success() {
+        return new BaseResponse<>(Result.success(null), null);
+    }
 
     public static BaseResponse<Void> error(String message) {
         return new BaseResponse<>(Result.fail(message), null);
