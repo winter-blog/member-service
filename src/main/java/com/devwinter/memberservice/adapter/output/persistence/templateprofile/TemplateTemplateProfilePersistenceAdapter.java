@@ -3,6 +3,7 @@ package com.devwinter.memberservice.adapter.output.persistence.templateprofile;
 import com.devwinter.memberservice.application.port.output.LoadTemplateProfilePort;
 import com.devwinter.memberservice.domain.Profile;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,7 +14,6 @@ public class TemplateTemplateProfilePersistenceAdapter implements LoadTemplatePr
 
     private final TemplateProfileJpaEntityRepository profileRepository;
     private final TemplateProfileMapper templateProfileMapper;
-
     @Override
     public Optional<Profile> getRandomDefaultProfile() {
         long totalCount = profileRepository.count();

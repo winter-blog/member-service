@@ -17,7 +17,6 @@ public class UploadMemberProfileService implements UploadMemberProfileUseCase {
     private final LoadMemberQueryPort loadMemberQueryPort;
     private final UpdateMemberProfilePort updateMemberProfilePort;
     private final UploadProfileImagePort uploadProfileImagePort;
-
     @Override
     @Transactional
     public void addProfile(UploadMemberProfileCommand command) {
