@@ -21,10 +21,9 @@ public class UploadProfileImageAdapter implements UploadProfileImagePort {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
-    @Value("${cloud.aws.s3.profile-prefix}")
-    private String profilePrefix;
     private final AmazonS3Client amazonS3Client;
+    @Value("${cloud.aws.s3.profile-prefix}")
+    private String basePrefix;
 
     @Override
     public void upload(Profile profile, MultipartFile multipartFile) {
@@ -32,7 +31,7 @@ public class UploadProfileImageAdapter implements UploadProfileImagePort {
             try {
                 ObjectMetadata objectMetadata = getObjectMetadata(multipartFile);
                 try (InputStream inputStream = multipartFile.getInputStream()) {
-                    amazonS3Client.putObject(new PutObjectRequest(bucket, profilePrefix + profile.getPath(), inputStream, objectMetadata)
+                    amazonS3Client.putObject(new PutObjectRequest(bucket, basePrefix + profile.getPath(), inputStream, objectMetadata)
                             .withCannedAcl(CannedAccessControlList.PublicRead));
                 } catch (IOException e) {
                     throw new FileUploadException();

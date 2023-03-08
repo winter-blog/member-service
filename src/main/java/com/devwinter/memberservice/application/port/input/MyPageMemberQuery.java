@@ -13,16 +13,15 @@ public interface MyPageMemberQuery {
     MyPageMemberDto getMemberInfo(Long memberId);
 
     record MyPageMemberDto(Long memberId, String email, String nickName, List<ProfileDto> profiles) {
-        public static MyPageMemberDto of(Member member) {
+        public static MyPageMemberDto of(Member member, String baseUrl) {
             return new MyPageMemberDto(
-                    member.getId()
-                          .value(),
+                    member.getId().value(),
                     member.getEmail(),
                     member.getNickName(),
                     member.getProfiles()
                           .getProfiles()
                           .stream()
-                          .map(p -> new ProfileDto(p.getPath(), p.getCreatedAt()))
+                          .map(p -> new ProfileDto(baseUrl + p.getPath(), p.getCreatedAt()))
                           .collect(Collectors.toList())
 
             );

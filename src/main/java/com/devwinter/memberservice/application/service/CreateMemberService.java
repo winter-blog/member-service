@@ -23,7 +23,6 @@ public class CreateMemberService implements CreateMemberUseCase {
     private final SaveMemberPort saveMemberPort;
     private final LoadTemplateProfilePort loadTemplateProfilePort;
     private final PasswordEncoder passwordEncoder;
-
     @Override
     public Long createMember(CreateMemberCommand command) {
         if (loadMemberQueryPort.existByEmail(command.email())) {
