@@ -64,6 +64,17 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                 .fetchOne() != null;
     }
 
+    @Override
+    public boolean existByNickname(String nickName) {
+        return queryFactory
+                .select(memberJpaEntity)
+                .from(memberJpaEntity)
+                .where(
+                        memberJpaEntity.nickName.eq(nickName)
+                )
+                .fetchFirst() != null;
+    }
+
     private void deleteMemberValid(MemberJpaEntity result) {
         if(result != null && result.isDeleted()) {
             throw new MemberException(MEMBER_ALREADY_DELETE);

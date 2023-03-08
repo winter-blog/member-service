@@ -13,7 +13,8 @@ public enum MemberErrorCode {
     MEMBER_PASSWORD_SAME(HttpStatus.CONFLICT, "기존 비밀번호와 동일합니다."),
     MEMBER_ALREADY_DELETE(HttpStatus.BAD_REQUEST, "회원이 이미 휴면 계정입니다."),
     MEMBER_NICKNAME_SAME(HttpStatus.CONFLICT, "회원 닉네임이 동일합니다."),
-    MEMBER_PROFILE_MAX_OVER(HttpStatus.BAD_REQUEST, "프로필은 최대 5개까지 등록 가능합니다.")
+    MEMBER_PROFILE_MAX_OVER(HttpStatus.BAD_REQUEST, "프로필은 최대 5개까지 등록 가능합니다."),
+    MEMBER_NICKNAME_DUPLICATE(HttpStatus.CONFLICT, "동일한 닉네임이 존재합니다.")
     ;
 
     private final HttpStatus httpStatus;

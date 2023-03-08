@@ -2,10 +2,9 @@ package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.*;
 import com.devwinter.memberservice.application.port.input.*;
-import com.devwinter.memberservice.application.port.input.UploadMemberProfileUseCase.UploadMemberProfileCommand;
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase.EditInfoMemberCommand;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
-import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
+import com.devwinter.memberservice.application.port.input.UploadMemberProfileUseCase.UploadMemberProfileCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +14,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/members")
-public class MemberApiController {
+public class MemberCommandApiController {
 
     private final CreateMemberUseCase memberUseCase;
     private final EditPasswordMemberUseCase editPasswordMemberUseCase;
@@ -58,12 +57,5 @@ public class MemberApiController {
             @RequestPart("profile") MultipartFile profile) {
         uploadMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
         return AddProfileMember.Response.success();
-    }
-
-    @GetMapping("/my-page")
-    public BaseResponse<MemberMyPage.Response> myPage(
-            @RequestHeader("MemberId") Long memberId) {
-        MyPageMemberDto memberInfo = myPageMemberQuery.getMemberInfo(memberId);
-        return MemberMyPage.Response.success(memberInfo);
     }
 }
