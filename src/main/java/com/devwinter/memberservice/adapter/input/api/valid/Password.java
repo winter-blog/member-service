@@ -1,4 +1,4 @@
-package com.devwinter.memberservice.adapter.input.api.dto;
+package com.devwinter.memberservice.adapter.input.api.valid;
 
 
 import javax.validation.Constraint;

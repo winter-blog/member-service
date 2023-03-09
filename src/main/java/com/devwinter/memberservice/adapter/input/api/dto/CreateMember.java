@@ -1,5 +1,8 @@
 package com.devwinter.memberservice.adapter.input.api.dto;
 
+import com.devwinter.memberservice.adapter.input.api.valid.Email;
+import com.devwinter.memberservice.adapter.input.api.valid.Nickname;
+import com.devwinter.memberservice.adapter.input.api.valid.Password;
 import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 public class CreateMember {
     @Getter
     public static class Request {
-        @NotEmpty(message = "닉네임은 필수값 입니다.")
+        @Nickname
         private String nickName;
         @Email
         private String email;
