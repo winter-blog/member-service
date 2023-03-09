@@ -1,11 +1,11 @@
 package com.devwinter.memberservice.adapter.input.api.dto;
 
+import com.devwinter.memberservice.adapter.input.api.valid.Password;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 public class EditPasswordMember {
     @Getter
