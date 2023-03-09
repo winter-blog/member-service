@@ -21,7 +21,6 @@ public class MemberCommandApiController {
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final EditInfoMemberUseCase editInfoMemberUseCase;
     private final UploadMemberProfileUseCase uploadMemberProfileUseCase;
-    private final MyPageMemberQuery myPageMemberQuery;
 
     @PostMapping
     public BaseResponse<CreateMember.Response> createMember(@Valid @RequestBody CreateMember.Request request) {
