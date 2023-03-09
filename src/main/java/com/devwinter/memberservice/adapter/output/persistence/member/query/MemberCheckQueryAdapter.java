@@ -2,7 +2,7 @@ package com.devwinter.memberservice.adapter.output.persistence.member.query;
 
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberMapper;
 import com.devwinter.memberservice.application.port.output.LoadMemberQueryPort;
-import com.devwinter.memberservice.application.port.output.NicknameDuplicateQueryPort;
+import com.devwinter.memberservice.application.port.output.JoinDuplicateCheckQueryPort;
 import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import static com.devwinter.memberservice.application.service.exception.MemberEr
 
 @Component
 @RequiredArgsConstructor
-public class MemberQueryAdapter implements LoadMemberQueryPort, NicknameDuplicateQueryPort {
+public class MemberCheckQueryAdapter implements LoadMemberQueryPort, JoinDuplicateCheckQueryPort {
 
     private final MemberQueryRepository memberQueryRepository;
     private final MemberMapper memberMapper;
