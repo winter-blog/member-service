@@ -11,7 +11,6 @@ public class EditPasswordMember {
     @Getter
     public static class Request {
         @Password
-        @NotBlank(message = "패스워드는 필수 값 입니다.")
         private String password;
     }
 
