@@ -9,25 +9,11 @@ public interface JoinDuplicateUseCase {
     void nickNameCheck(NicknameDuplicateCommand command);
     void emailCheck(EmailDuplicateCommand command);
 
-    @Getter
-    class NicknameDuplicateCommand extends SelfValidating {
-        @Nickname
-        private final String nickName;
+    record NicknameDuplicateCommand(String nickName) {
 
-        public NicknameDuplicateCommand(String nickName) {
-            this.nickName = nickName;
-            this.validateSelf();
-        }
     }
 
-    @Getter
-    class EmailDuplicateCommand extends SelfValidating {
-        @Email
-        private final String email;
+    record EmailDuplicateCommand(String email) {
 
-        public EmailDuplicateCommand(String email) {
-            this.email = email;
-            this.validateSelf();
-        }
     }
 }

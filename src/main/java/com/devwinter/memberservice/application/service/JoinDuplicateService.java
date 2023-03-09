@@ -19,14 +19,14 @@ public class JoinDuplicateService implements JoinDuplicateUseCase {
 
     @Override
     public void nickNameCheck(NicknameDuplicateCommand command) {
-        if (joinDuplicateCheckQueryPort.existByNickname(command.getNickName())) {
+        if (joinDuplicateCheckQueryPort.existByNickname(command.nickName())) {
             throw new MemberException(MEMBER_NICKNAME_DUPLICATE);
         }
     }
 
     @Override
     public void emailCheck(EmailDuplicateCommand command) {
-        if (joinDuplicateCheckQueryPort.existByEmail(command.getEmail())) {
+        if (joinDuplicateCheckQueryPort.existByEmail(command.email())) {
             throw new MemberException(MEMBER_DUPLICATE_EXCEPTION);
         }
     }

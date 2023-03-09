@@ -1,7 +1,9 @@
 package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.BaseResponse;
+import com.devwinter.memberservice.adapter.input.api.dto.EmailDuplicate;
 import com.devwinter.memberservice.adapter.input.api.dto.MemberMyPage;
+import com.devwinter.memberservice.adapter.input.api.dto.NicknameDuplicate;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.EmailDuplicateCommand;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
@@ -9,6 +11,8 @@ import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.NicknameDuplicateCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,15 +29,15 @@ public class MemberQueryApiController {
         return MemberMyPage.Response.success(memberInfo);
     }
 
-    @GetMapping("/check/{nickName}/nickname")
-    public BaseResponse<Void> checkNickname(@PathVariable String nickName) {
-        joinDuplicateUseCase.nickNameCheck(new NicknameDuplicateCommand(nickName));
+    @PostMapping("/check/nickname")
+    public BaseResponse<Void> checkNickname(@Valid @RequestBody NicknameDuplicate.Request request) {
+        joinDuplicateUseCase.nickNameCheck(new NicknameDuplicateCommand(request.getNickName()));
         return BaseResponse.success();
     }
 
-    @GetMapping("/check/{email}/email")
-    public BaseResponse<Void> checkEmail(@PathVariable String email) {
-        joinDuplicateUseCase.emailCheck(new EmailDuplicateCommand(email));
+    @PostMapping("/check/email")
+    public BaseResponse<Void> checkEmail(@Valid @RequestBody EmailDuplicate.Request request) {
+        joinDuplicateUseCase.emailCheck(new EmailDuplicateCommand(request.getEmail()));
         return BaseResponse.success();
     }
 }
