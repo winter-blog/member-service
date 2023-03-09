@@ -2,7 +2,6 @@ package com.devwinter.memberservice.adapter.input.api;
 
 import com.devwinter.memberservice.adapter.input.api.dto.BaseResponse;
 import com.devwinter.memberservice.adapter.input.api.dto.MemberMyPage;
-import com.devwinter.memberservice.application.port.input.EmailDuplicateUseCase;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.EmailDuplicateCommand;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
@@ -18,7 +17,6 @@ public class MemberQueryApiController {
 
     private final MyPageMemberQuery myPageMemberQuery;
     private final JoinDuplicateUseCase joinDuplicateUseCase;
-    private final EmailDuplicateUseCase emailDuplicateUseCase;
 
     @GetMapping("/my-page")
     public BaseResponse<MemberMyPage.Response> myPage(
