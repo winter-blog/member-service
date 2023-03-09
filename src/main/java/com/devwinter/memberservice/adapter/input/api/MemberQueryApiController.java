@@ -1,14 +1,13 @@
 package com.devwinter.memberservice.adapter.input.api;
 
-import com.devwinter.memberservice.adapter.input.api.dto.BaseResponse;
-import com.devwinter.memberservice.adapter.input.api.dto.EmailDuplicate;
-import com.devwinter.memberservice.adapter.input.api.dto.MemberMyPage;
-import com.devwinter.memberservice.adapter.input.api.dto.NicknameDuplicate;
+import com.devwinter.memberservice.adapter.input.api.dto.*;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.EmailDuplicateCommand;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery;
 import com.devwinter.memberservice.application.port.input.MyPageMemberQuery.MyPageMemberDto;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.NicknameDuplicateCommand;
+import com.devwinter.memberservice.application.port.input.PasswordCheckSameUseCase;
+import com.devwinter.memberservice.application.port.input.PasswordCheckSameUseCase.PasswordCheckCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +20,21 @@ public class MemberQueryApiController {
 
     private final MyPageMemberQuery myPageMemberQuery;
     private final JoinDuplicateUseCase joinDuplicateUseCase;
+    private final PasswordCheckSameUseCase passwordCheckSameUseCase;
 
     @GetMapping("/my-page")
     public BaseResponse<MemberMyPage.Response> myPage(
             @RequestHeader("MemberId") Long memberId) {
         MyPageMemberDto memberInfo = myPageMemberQuery.getMemberInfo(memberId);
         return MemberMyPage.Response.success(memberInfo);
+    }
+
+    @PostMapping("/valid/password")
+    public BaseResponse<Void> checkPassword(
+            @RequestHeader("MemberId") Long memberId,
+            @Valid @RequestBody ValidPassword.Request request) {
+        passwordCheckSameUseCase.check(new PasswordCheckCommand(memberId, request.getPassword()));
+        return BaseResponse.success();
     }
 
     @PostMapping("/check/nickname")
