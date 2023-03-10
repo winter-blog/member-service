@@ -1,15 +1,14 @@
 package com.devwinter.memberservice.domain;
 
 import com.devwinter.memberservice.application.service.exception.MemberException;
+import com.devwinter.memberservice.common.Events;
+import com.devwinter.memberservice.domain.event.PasswordChangeEvent;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.*;
 
@@ -27,6 +26,7 @@ public class Member {
 
     public void changePassword(String newPassword) {
         this.password = newPassword;
+        Events.raise(new PasswordChangeEvent(this.getId().value, this.getEmail()));
     }
 
     public void delete() {
