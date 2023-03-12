@@ -7,11 +7,14 @@ import com.devwinter.memberservice.application.port.input.CreateMemberUseCase;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
 public class CreateMember {
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Request {
         @Nickname
         private String nickName;

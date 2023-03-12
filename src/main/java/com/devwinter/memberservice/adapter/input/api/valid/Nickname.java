@@ -8,11 +8,10 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.regex.Pattern;
 
 import static java.lang.annotation.ElementType.FIELD;
 
-@Constraint(validatedBy = Nickname.EmailValidator.class)
+@Constraint(validatedBy = Nickname.NickNameValidator.class)
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(FIELD)
@@ -22,7 +21,7 @@ public @interface Nickname {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default{};
 
-    class EmailValidator implements ConstraintValidator<Nickname, String> {
+    class NickNameValidator implements ConstraintValidator<Nickname, String> {
 
         @Override
         public boolean isValid(String nickName, ConstraintValidatorContext constraintValidatorContext) {

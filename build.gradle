@@ -1,6 +1,7 @@
 buildscript {
     ext {
         queryDslVersion = "5.0.0"
+        restdocsApiSpecVersion = "0.16.2"
     }
 }
 
@@ -10,6 +11,9 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     // querydsl
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    // rest docs
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+
 }
 
 group = 'com.devwinter'
@@ -59,6 +63,18 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // swaggerUI 'org.webjars:swagger-ui:4.11.1'
+    // testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+        testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    // testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    // testImplementation 'org.springframework.security:spring-security-test'
+
+
+//    testImplementation 'io.rest-assured:rest-assured'
+//    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+//    testImplementation "com.epages:restdocs-api-spec-restassured:${restdocsApiSpecVersion}"
 }
 
 dependencyManagement {
@@ -79,11 +95,9 @@ querydsl {
     querydslSourcesDir = querydslDir
 }
 
-ext.profile = (!project.hasProperty('profile') || !profile) ? 'jwt-local' : profile
-
 sourceSets {
     main {
-        java{
+        java {
             srcDir querydslDir
         }
     }
@@ -100,3 +114,19 @@ compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 // ===== querydsl end ===== //
+
+openapi3 {
+    setServer("http://ec2-3-34-53-11.ap-northeast-2.compute.amazonaws.com:8080/member-service/")
+    title = "회원 서비스 API"
+    description = "회원 서비스 API 문서"
+    version = "v1"
+    format = "yaml"
+}
+
+//task copyTest {
+//    dependsOn("openapi3")
+//    copy {
+//        from "$buildDir/api-spec/openapi3.yaml"
+//        into "src/main/resources/static/docs/."
+//    }
+//}
