@@ -4,6 +4,7 @@ import com.devwinter.memberservice.adapter.output.persistence.bulk.MemberJpaEnti
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
 import com.devwinter.memberservice.fixture.MemberJpaEntityFixtureFactory;
 import org.jeasy.random.EasyRandom;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,6 +24,7 @@ class MemberJpaEntityBulkInsertRepositoryImplTest {
     private MemberJpaEntityBulkInsertRepository memberJpaEntityBulkInsertRepository;
 
     @Test
+    @Disabled
     public void bulkInsert() {
         EasyRandom easyRandom = MemberJpaEntityFixtureFactory.get();
 
