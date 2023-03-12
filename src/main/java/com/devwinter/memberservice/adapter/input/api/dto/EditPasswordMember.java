@@ -4,11 +4,14 @@ import com.devwinter.memberservice.adapter.input.api.valid.Password;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
 public class EditPasswordMember {
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Request {
         @Password
         private String password;

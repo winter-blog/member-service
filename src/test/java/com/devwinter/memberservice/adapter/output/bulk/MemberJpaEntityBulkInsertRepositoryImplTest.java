@@ -1,5 +1,6 @@
 package com.devwinter.memberservice.adapter.output.bulk;
 
+import com.devwinter.memberservice.adapter.output.persistence.bulk.MemberJpaEntityBulkInsertRepository;
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
 import com.devwinter.memberservice.fixture.MemberJpaEntityFixtureFactory;
 import org.jeasy.random.EasyRandom;

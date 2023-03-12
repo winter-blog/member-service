@@ -6,6 +6,7 @@ pipeline {
         GIT_REPOSITORY_URL = 'https://github.com/winter-blog/member-service.git'
 
         repository = 'alswn4516/winter-blog-member-service'
+        apiRepository = 'alswn4516/winter-blog-member-service-api'
         DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential')
         DOCKER_CONTAINER_NAME = 'winter-blog-member-service'
 
@@ -29,7 +30,7 @@ pipeline {
           steps {
                 sh "chmod +x gradlew"
                 sh """
-                   ./gradlew clean build bootJar -x test
+                   ./gradlew clean openapi3 build bootJar
                    """
             }
         }
@@ -43,7 +44,16 @@ pipeline {
             }
         }
 
-         stage("Deploy to EC2") {
+        stage("OpenApi3 Dockerize") {
+            steps {
+                sh "docker build -t $apiRepository -f Dockerfile.openapi3 ."
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                sh "docker push $apiRepository"
+                sh "docker rmi $apiRepository"
+            }
+        }
+
+        stage("Deploy to EC2") {
             steps {
                   sh "$SSH_CMD 'docker pull $repository'"
                   sh "$SSH_CMD 'docker stop $DOCKER_CONTAINER_NAME || true'"
