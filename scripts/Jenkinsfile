@@ -11,11 +11,15 @@ pipeline {
         DOCKER_CONTAINER_NAME = 'winter-blog-member-service'
 
         INTERNAL_PORT = 9000
-        PROFILE='-e "SPRING_PROFILES_ACTIVE=prod"'
-        SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem ubuntu@3.34.53.11'
-        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem /build'
+        PROFILE ='-e "SPRING_PROFILES_ACTIVE=prod"'
+        REMOTE = 'ubuntu@3.34.53.11'
+        SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem'
         ENV_FILE = '--env-file=./env/member-service.env'
         NETWORK = '--net winter-blog-network'
+
+        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem /build'
+        SOURCE_FILE = 'build/api-spec/openapi3.yaml'
+        TARGET_DIRECTORY = ':/docs'
     }
 
     stages {
@@ -65,17 +69,18 @@ pipeline {
 
         stage("Deploy to EC2") {
             steps {
-                  sh "$SSH_CMD 'docker pull $repository'"
-                  sh "$SSH_CMD 'docker stop $DOCKER_CONTAINER_NAME || true'"
-                  sh "$SSH_CMD 'docker rm $DOCKER_CONTAINER_NAME || true'"
-                  sh "$SSH_CMD 'docker run -d --name $DOCKER_CONTAINER_NAME $NETWORK $PROFILE -p $INTERNAL_PORT $ENV_FILE $repository'"
-                  sh "$SSH_CMD 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
+                  sh "$SSH_CMD $REMOTE 'docker pull $repository'"
+                  sh "$SSH_CMD $REMOTE 'docker stop $DOCKER_CONTAINER_NAME || true'"
+                  sh "$SSH_CMD $REMOTE 'docker rm $DOCKER_CONTAINER_NAME || true'"
+                  sh "$SSH_CMD $REMOTE 'docker run -d --name $DOCKER_CONTAINER_NAME $NETWORK $PROFILE -p $INTERNAL_PORT $ENV_FILE $repository'"
+                  sh "$SSH_CMD $REMOTE 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
             }
          }
 
          stage('Deploy to EC2 api docs') {
            steps {
-             sh "pwd | xargs echo Current directory:"
+                 sh "pwd | xargs echo Current directory:"
+                 sh "$SCP_CMD $SOURCE_FILE $REMOTE $TARGET_DIRECTORY"
            }
          }
 
