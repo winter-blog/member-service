@@ -13,6 +13,7 @@ pipeline {
         INTERNAL_PORT = 9000
         PROFILE='-e "SPRING_PROFILES_ACTIVE=prod"'
         SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem ubuntu@3.34.53.11'
+        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem /build'
         ENV_FILE = '--env-file=./env/member-service.env'
         NETWORK = '--net winter-blog-network'
     }
@@ -53,14 +54,14 @@ pipeline {
             }
         }
 
-        stage("OpenApi3 Dockerize") {
-            steps {
-                sh "docker build -t $apiRepository -f Dockerfile.openapi3 ."
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                sh "docker push $apiRepository"
-                sh "docker rmi $apiRepository"
-            }
-        }
+//         stage("OpenApi3 Dockerize") {
+//             steps {
+//                 sh "docker build -t $apiRepository -f Dockerfile.openapi3 ."
+//                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+//                 sh "docker push $apiRepository"
+//                 sh "docker rmi $apiRepository"
+//             }
+//         }
 
         stage("Deploy to EC2") {
             steps {
@@ -71,5 +72,12 @@ pipeline {
                   sh "$SSH_CMD 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
             }
          }
+
+         stage('Deploy to EC2 api docs') {
+           steps {
+             sh "pwd | xargs echo Current directory:"
+           }
+         }
+
     }
 }
