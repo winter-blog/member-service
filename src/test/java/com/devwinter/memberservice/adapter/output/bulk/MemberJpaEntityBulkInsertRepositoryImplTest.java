@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("local")
+@Disabled
 class MemberJpaEntityBulkInsertRepositoryImplTest {
 
     @Autowired
     private MemberJpaEntityBulkInsertRepository memberJpaEntityBulkInsertRepository;
 
     @Test
-    @Disabled
     public void bulkInsert() {
         EasyRandom easyRandom = MemberJpaEntityFixtureFactory.get();
 
