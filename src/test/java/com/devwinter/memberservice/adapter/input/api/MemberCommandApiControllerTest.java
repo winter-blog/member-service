@@ -1,16 +1,16 @@
 package com.devwinter.memberservice.adapter.input.api;
 
-import com.devwinter.memberservice.adapter.input.api.dto.CreateMember;
-import com.devwinter.memberservice.adapter.input.api.dto.DeleteMember;
-import com.devwinter.memberservice.adapter.input.api.dto.EditPasswordMember;
+import com.devwinter.memberservice.adapter.input.api.dto.*;
 import com.devwinter.memberservice.application.port.input.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,10 +20,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberCommandApiController.class)
@@ -124,6 +124,71 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
                                null,
                                DeleteMember.Response.class,
                                null,
+                               Arrays.asList(
+                                       descriptor("result.status", STRING, "결과"),
+                                       descriptor("result.message", STRING, "메세지")
+                               )
+                       )
+               )
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 정보 변경 테스트")
+    void editMemberInfoApiTest() throws Exception {
+        String body = requestToJson(new EditInfoMember.Request("nickname"));
+
+        doNothing().when(editInfoMemberUseCase)
+                   .edit(any());
+
+        mockMvc.perform(patch(BASE_URL + "/edit-info")
+                       .headers(auth())
+                       .secure(true)
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .content(body)
+               )
+               .andDo(
+                       document(
+                               EDIT_INFO,
+                               EditInfoMember.Request.class,
+                               EditInfoMember.Response.class,
+                               List.of(
+                                       descriptor("nickName", STRING, "변경할 닉네임")
+                               ),
+                               Arrays.asList(
+                                       descriptor("result.status", STRING, "결과"),
+                                       descriptor("result.message", STRING, "메세지")
+                               )
+                       )
+               )
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 프로필 이미지 업로드 테스트")
+    void uploadProfileApiTest() throws Exception {
+        String body = requestToJson(new EditInfoMember.Request("nickname"));
+
+        doNothing().when(uploadMemberProfileUseCase)
+                   .uploadProfile(any());
+        MockMultipartFile profile = new MockMultipartFile("profile",
+                "test.png",
+                "image/png",
+                "test file".getBytes(StandardCharsets.UTF_8));
+
+        mockMvc.perform(
+                       multipart(BASE_URL + "/upload-profile")
+                               .file(profile)
+                               .headers(auth())
+                               .secure(true)
+               )
+               .andDo(
+                       document(
+                               UPLOAD_PROFILE,
+                               AddProfileMember.Response.class,
+                               List.of(
+                                       partWithName("profile").description("프로필")
+                               ),
                                Arrays.asList(
                                        descriptor("result.status", STRING, "결과"),
                                        descriptor("result.message", STRING, "메세지")

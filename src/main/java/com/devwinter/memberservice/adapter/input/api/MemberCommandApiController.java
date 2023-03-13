@@ -51,10 +51,10 @@ public class MemberCommandApiController {
     }
 
     @PostMapping("/upload-profile")
-    public BaseResponse<AddProfileMember.Response> addProfile(
+    public BaseResponse<AddProfileMember.Response> uploadProfile(
             @RequestHeader("MemberId") Long memberId,
             @RequestPart("profile") MultipartFile profile) {
-        uploadMemberProfileUseCase.addProfile(new UploadMemberProfileCommand(memberId, profile));
+        uploadMemberProfileUseCase.uploadProfile(new UploadMemberProfileCommand(memberId, profile));
         return AddProfileMember.Response.success();
     }
 }

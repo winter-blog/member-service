@@ -13,6 +13,7 @@ import org.springframework.restdocs.constraints.ResourceBundleConstraintDescript
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.request.RequestPartDescriptor;
 import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.restdocs.snippet.Attributes.Attribute;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +30,7 @@ import static com.epages.restdocs.apispec.Schema.schema;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 
 @AutoConfigureRestDocs
 public abstract class AbstractRestDocs {
@@ -73,6 +75,22 @@ public abstract class AbstractRestDocs {
         );
     }
 
+    protected RestDocumentationResultHandler document(
+            MemberApiDocumentInfo documentInfo,
+            Class<?> responseClass,
+            List<RequestPartDescriptor> requestParts,
+            List<FieldDescriptorDto> responseFields) {
+        return MockMvcRestDocumentationWrapper.document(
+                documentInfo.getIdentifier(),
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestParts(requestParts),
+                resource(
+                        snippet(documentInfo, null, responseClass, null, responseFields)
+                )
+        );
+    }
+
     private ResourceSnippetParameters snippet(MemberApiDocumentInfo documentInfo, Class<?> requestClass, Class<?> responseClass, List<FieldDescriptorDto> requestFields, List<FieldDescriptorDto> responseFields) {
         return ResourceSnippetParameters.builder()
                                         .tag(documentInfo.getTag())
@@ -89,6 +107,7 @@ public abstract class AbstractRestDocs {
                                                 )
                                                 : new ArrayList<>()
                                         )
+
                                         .build();
     }
 

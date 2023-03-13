@@ -19,7 +19,7 @@ public class UploadMemberProfileService implements UploadMemberProfileUseCase {
     private final UploadProfileImagePort uploadProfileImagePort;
     @Override
     @Transactional
-    public void addProfile(UploadMemberProfileCommand command) {
+    public void uploadProfile(UploadMemberProfileCommand command) {
         Member member = loadMemberQueryPort.findByMemberId(command.memberId());
 
         Profile profile = new Profile(command.multipartFile().getOriginalFilename(), Profile.ProfileType.CUSTOM);
