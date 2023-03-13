@@ -17,9 +17,9 @@ pipeline {
         ENV_FILE = '--env-file=./env/member-service.env'
         NETWORK = '--net winter-blog-network'
 
-        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem /build'
-        SOURCE_FILE = 'build/api-spec/openapi3.yaml'
-        TARGET_DIRECTORY = ':/docs'
+        SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem'
+        SOURCE_FILE = 'build/api-spec/member-api-spec.yaml'
+        TARGET_DIRECTORY = ':docs'
     }
 
     stages {

@@ -66,12 +66,8 @@ dependencies {
 
     // swaggerUI 'org.webjars:swagger-ui:4.11.1'
     // testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-        testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
+    testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
     testAnnotationProcessor 'org.projectlombok:lombok'
-    // testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    // testImplementation 'org.springframework.security:spring-security-test'
-
-
 //    testImplementation 'io.rest-assured:rest-assured'
 //    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 //    testImplementation "com.epages:restdocs-api-spec-restassured:${restdocsApiSpecVersion}"
@@ -121,6 +117,7 @@ openapi3 {
     description = "회원 서비스 API 문서"
     version = "v1"
     format = "yaml"
+    outputFileNamePrefix = 'member-api-spec'
 }
 
 //task copyTest {

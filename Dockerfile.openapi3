@@ -1,4 +1,0 @@
-FROM node:14-alpine
-ARG API_FILE=build/api-spec/*.yaml
-COPY ${API_FILE} member-api.yml
-CMD ["swagger-cli", "bundle", "/openapi3.yml", "-o", "/bundle/openapi3.yml"]
