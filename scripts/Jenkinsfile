@@ -80,7 +80,7 @@ pipeline {
          stage('Deploy to EC2 api docs') {
            steps {
                  sh "pwd | xargs echo Current directory:"
-                 sh "$SCP_CMD $SOURCE_FILE $REMOTE $TARGET_DIRECTORY"
+                 sh "$SCP_CMD $SOURCE_FILE $REMOTE$TARGET_DIRECTORY"
            }
          }
 
