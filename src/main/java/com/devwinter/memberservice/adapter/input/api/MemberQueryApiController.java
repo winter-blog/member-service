@@ -8,10 +8,9 @@ import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase;
 import com.devwinter.memberservice.application.port.input.JoinDuplicateUseCase.NicknameDuplicateCommand;
 import com.devwinter.memberservice.application.port.input.PasswordCheckSameUseCase;
 import com.devwinter.memberservice.application.port.input.PasswordCheckSameUseCase.PasswordCheckCommand;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor

@@ -4,9 +4,9 @@ import com.devwinter.memberservice.adapter.output.persistence.BaseTimeEntity;
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;
 import com.devwinter.memberservice.domain.ProfileCollection;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
 @Getter
 @Entity

@@ -6,6 +6,10 @@ public enum MemberApiDocumentInfo {
     DELETE("회원", "회원 탈퇴", "회원 탈퇴", "회원 탈퇴 API", true),
     EDIT_INFO("회원", "회원 정보 변경", "회원 정보 변경", "회원 정보 변경 API", true),
     UPLOAD_PROFILE("회원", "회원 프로필 업로드", "회원 프로필 업로드", "회원 프로필 업로드 API", true),
+    CHECK_EMAIL("회원", "이메일 중복 검사", "이메일 중복 검사", "이메일 중복 검사 API", false),
+    CHECK_NICKNAME("회원", "닉네임 중복 검사", "닉네임 중복 검사", "닉네임 중복 검사 API", false),
+    CHECK_PASSWORD("회원", "비밀번호 중복 검사", "비밀번호 중복 검사", "비밀번호 중복 검사 API", true),
+    MY_PAGE("회원", "마이페이지", "마이페이지", "마이페이지 API", true),
     ;
 
     private final String tag;

@@ -2,9 +2,12 @@ package com.devwinter.memberservice.adapter.output.persistence.member.entity;
 
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

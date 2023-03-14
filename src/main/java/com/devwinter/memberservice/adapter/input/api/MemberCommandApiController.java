@@ -5,11 +5,11 @@ import com.devwinter.memberservice.application.port.input.*;
 import com.devwinter.memberservice.application.port.input.EditInfoMemberUseCase.EditInfoMemberCommand;
 import com.devwinter.memberservice.application.port.input.EditPasswordMemberUseCase.EditPasswordMemberCommand;
 import com.devwinter.memberservice.application.port.input.UploadMemberProfileUseCase.UploadMemberProfileCommand;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +23,8 @@ public class MemberCommandApiController {
     private final UploadMemberProfileUseCase uploadMemberProfileUseCase;
 
     @PostMapping
-    public BaseResponse<CreateMember.Response> createMember(@Valid @RequestBody CreateMember.Request request) {
+    public BaseResponse<CreateMember.Response> createMember(
+            @Valid @RequestBody CreateMember.Request request) {
         Long memberId = memberUseCase.createMember(request.toCommand());
         return CreateMember.Response.success(memberId);
     }

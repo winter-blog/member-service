@@ -2,11 +2,11 @@ package com.devwinter.memberservice.adapter.output.persistence.member.entity;
 
 import com.devwinter.memberservice.adapter.output.persistence.BaseTimeEntity;
 import com.devwinter.memberservice.domain.Profile.ProfileType;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 
 
 @Getter
@@ -15,7 +15,8 @@ import javax.persistence.*;
 @Table(name = "member_profile")
 public class MemberProfileJpaEntity extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_profile_id")
     private Long id;
     private String path;

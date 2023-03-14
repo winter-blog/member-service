@@ -6,13 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.snippet.Attributes;
 
-import java.io.FileInputStream;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static com.devwinter.memberservice.adapter.input.api.AbstractRestDocs.FieldDescriptorDto.descriptor;
 import static com.devwinter.memberservice.adapter.input.api.MemberApiDocumentInfo.*;
@@ -20,11 +23,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(MemberCommandApiController.class)
 class MemberCommandApiControllerTest extends AbstractRestDocs {
@@ -39,8 +45,6 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
     @MockBean
     private UploadMemberProfileUseCase uploadMemberProfileUseCase;
 
-    private static final String BASE_URL = "/api/v1/members";
-
     @Test
     @DisplayName("회원가입 테스트")
     void createMemberApiTest() throws Exception {
@@ -51,8 +55,9 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
 
         // when & then
         mockMvc.perform(post(BASE_URL)
-                       .contentType(MediaType.APPLICATION_JSON)
+                       .contentType(APPLICATION_JSON)
                        .content(body))
+               .andDo(print())
                .andDo(
                        document(
                                CREATE,
@@ -85,7 +90,7 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
         // when & then
         mockMvc.perform(patch(BASE_URL + "/edit-password")
                        .headers(auth())
-                       .contentType(MediaType.APPLICATION_JSON)
+                       .contentType(APPLICATION_JSON)
                        .content(body)
                )
                .andDo(
@@ -116,8 +121,8 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
         // when & then
         mockMvc.perform(delete(BASE_URL)
                        .headers(auth())
-                       .secure(true)
                )
+               .andDo(print())
                .andDo(
                        document(
                                DELETE,
@@ -143,8 +148,7 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
 
         mockMvc.perform(patch(BASE_URL + "/edit-info")
                        .headers(auth())
-                       .secure(true)
-                       .contentType(MediaType.APPLICATION_JSON)
+                       .contentType(APPLICATION_JSON)
                        .content(body)
                )
                .andDo(
@@ -164,30 +168,45 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
                .andExpect(status().isOk());
     }
 
+    private byte[] random() {
+        BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_GRAY);
+        WritableRaster raster = image.getRaster();
+        DataBufferByte buffer = (DataBufferByte) raster.getDataBuffer();
+        byte[] data = buffer.getData();
+
+        Random rng = new Random();
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte) rng.nextInt(256);
+        }
+        return data;
+    }
+
     @Test
     @DisplayName("회원 프로필 이미지 업로드 테스트")
     void uploadProfileApiTest() throws Exception {
-        String body = requestToJson(new EditInfoMember.Request("nickname"));
-
         doNothing().when(uploadMemberProfileUseCase)
                    .uploadProfile(any());
+
+        byte[] datas = random();
         MockMultipartFile profile = new MockMultipartFile("profile",
                 "test.png",
-                "image/png",
-                "test file".getBytes(StandardCharsets.UTF_8));
+                MULTIPART_FORM_DATA_VALUE,
+                datas);
+
 
         mockMvc.perform(
                        multipart(BASE_URL + "/upload-profile")
                                .file(profile)
+                               .content(datas)
                                .headers(auth())
-                               .secure(true)
                )
+               .andDo(print())
                .andDo(
                        document(
                                UPLOAD_PROFILE,
                                AddProfileMember.Response.class,
                                List.of(
-                                       partWithName("profile").description("프로필")
+                                       partWithName("profile").description("프로필").attributes(Attributes.key("format").value("binary"))
                                ),
                                Arrays.asList(
                                        descriptor("result.status", STRING, "결과"),

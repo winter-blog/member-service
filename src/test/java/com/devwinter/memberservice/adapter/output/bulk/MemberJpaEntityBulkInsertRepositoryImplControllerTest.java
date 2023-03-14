@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("local")
 @Disabled
-class MemberJpaEntityBulkInsertRepositoryImplTest {
+class MemberJpaEntityBulkInsertRepositoryImplControllerTest {
 
     @Autowired
     private MemberJpaEntityBulkInsertRepository memberJpaEntityBulkInsertRepository;
