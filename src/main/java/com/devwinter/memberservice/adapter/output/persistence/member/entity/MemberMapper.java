@@ -29,7 +29,8 @@ public class MemberMapper {
                                                                             p.getId(),
                                                                             p.getPath(),
                                                                             p.getProfileType(),
-                                                                            p.getCreatedAt()))
+                                                                            p.getCreatedAt(),
+                                                                            p.isMain()))
                                                                     .collect(Collectors.toList())))
                      .deleted(memberJpaEntity.isDeleted())
                      .build();

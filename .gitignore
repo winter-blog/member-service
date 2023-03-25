@@ -175,3 +175,8 @@ src/main/resources/application.yml
 database
 
 src/main/resources/static/docs/
+
+src/main/generated
+
+src/test/java/com/devwinter/memberservice/adapter/output/bulk
+src/test/resources/application-test.yml

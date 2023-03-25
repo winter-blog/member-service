@@ -1,17 +1,17 @@
 package com.devwinter.memberservice.adapter.output.persistence.member.query;
 
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
-import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
 import com.devwinter.memberservice.application.service.exception.MemberException;
-import com.devwinter.memberservice.domain.Member;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.devwinter.memberservice.adapter.output.persistence.member.entity.QMemberJpaEntity.memberJpaEntity;
+import static com.devwinter.memberservice.adapter.output.persistence.member.entity.QMemberProfileJpaEntity.memberProfileJpaEntity;
 import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_ALREADY_DELETE;
 
 
@@ -75,8 +75,22 @@ public class MemberQueryRepositoryImpl implements MemberQueryRepository {
                 .fetchFirst() != null;
     }
 
+    @Override
+    public List<MemberJpaEntity> findByMemberIds(List<Long> memberIds) {
+        return queryFactory
+                .select(memberJpaEntity)
+                .from(memberJpaEntity)
+                .join(memberJpaEntity.profiles.profiles, memberProfileJpaEntity).fetchJoin()
+                .where(
+                        memberJpaEntity.deleted.isFalse(),
+                        memberJpaEntity.id.in(memberIds),
+                        memberProfileJpaEntity.main.isTrue()
+                )
+                .fetch();
+    }
+
     private void deleteMemberValid(MemberJpaEntity result) {
-        if(result != null && result.isDeleted()) {
+        if (result != null && result.isDeleted()) {
             throw new MemberException(MEMBER_ALREADY_DELETE);
         }
     }

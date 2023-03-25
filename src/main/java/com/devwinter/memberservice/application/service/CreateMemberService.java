@@ -31,6 +31,7 @@ public class CreateMemberService implements CreateMemberUseCase {
 
         Profile profile = loadTemplateProfilePort.getRandomDefaultProfile()
                                                  .orElseThrow(() -> new MemberException(TEMPLATE_PROFILE_IMAGE_NOT_FOUND));
+        profile.changeProfileMainStatus(true);
 
         String encrypt = passwordEncoder.encode(command.password());
         Member member = MemberFactory.withoutId(command.nickName(), command.email(), encrypt, profile);

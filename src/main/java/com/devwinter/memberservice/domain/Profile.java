@@ -11,6 +11,7 @@ public class Profile {
     private String path;
     private final ProfileType type;
     private final LocalDateTime createdAt;
+    private boolean main;
 
     public Profile(String path, ProfileType type) {
         this.id = null;
@@ -19,11 +20,12 @@ public class Profile {
         setPath(path, type);
     }
 
-    public Profile(Long id, String path, ProfileType type, LocalDateTime createdAt) {
+    public Profile(Long id, String path, ProfileType type, LocalDateTime createdAt, boolean main) {
         this.id = id;
         this.type = type;
         this.createdAt = createdAt;
         this.path = path;
+        this.main = main;
     }
 
     private String generateUUIDPath(String path) {
@@ -36,6 +38,10 @@ public class Profile {
         } else {
             this.path = path;
         }
+    }
+
+    public void changeProfileMainStatus(boolean status) {
+        this.main = status;
     }
 
     public enum ProfileType {

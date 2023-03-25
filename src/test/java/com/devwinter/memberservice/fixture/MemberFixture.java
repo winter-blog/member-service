@@ -13,7 +13,7 @@ public class MemberFixture {
                 "nickName",
                 "email",
                 "password",
-                new Profile(1L, "profile.png", Profile.ProfileType.DEFAULT, LocalDateTime.now())
+                new Profile(1L, "profile.png", Profile.ProfileType.DEFAULT, LocalDateTime.now(), true)
         );
     }
 }

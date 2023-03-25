@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.MEMBER_PASSWORD_SAME;
 
 @Slf4j
@@ -41,4 +43,5 @@ public class EditPasswordMemberService implements EditPasswordMemberUseCase {
         // TODO: 변경 이력 (카프카 - 커넥터 사용)
         // memberPasswordEditHistoryPort.send(member, originalPassword);
     }
+
 }
