@@ -60,7 +60,7 @@ public class MemberCommandApiController {
         return AddProfileMember.Response.success();
     }
 
-    @PostMapping("/write-introduce")
+    @PostMapping("/introduce")
     public BaseResponse<WriteIntroduce.Response> writeIntroduce(
             @RequestHeader("MemberId") Long memberId,
             @Valid @RequestBody WriteIntroduce.Request request) {

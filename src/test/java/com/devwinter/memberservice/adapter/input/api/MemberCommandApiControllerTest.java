@@ -225,7 +225,7 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
                 .write(anyLong(), anyString());
 
         mockMvc.perform(
-                       post(BASE_URL + "/write-introduce")
+                       post(BASE_URL + "/introduce")
                                .contentType(APPLICATION_JSON)
                                .content(requestToJson(request))
                                .headers(auth())
