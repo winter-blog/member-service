@@ -130,6 +130,8 @@ class MemberQueryApiControllerTest extends AbstractRestDocs {
                 1L,
                 "test@gmail.com",
                 "nickName",
+                "introduce",
+                LocalDateTime.now(),
                 Arrays.asList(
                         new MyPageMemberQuery.ProfileDto("image1.png", LocalDateTime.now()),
                         new MyPageMemberQuery.ProfileDto("image2.png", LocalDateTime.now())
@@ -154,9 +156,10 @@ class MemberQueryApiControllerTest extends AbstractRestDocs {
                                        descriptor("body.memberId", NUMBER, "회원 id"),
                                        descriptor("body.email", STRING, "이메일"),
                                        descriptor("body.nickName", STRING, "닉네임"),
+                                       descriptor("body.introduce", STRING, "자기소개"),
+                                       descriptor("body.createdAt", STRING, "생성일시"),
                                        descriptor("body.profiles", ARRAY, "프로필 목록"),
-                                       descriptor("body.profiles[].path", STRING, "프로필 경로"),
-                                       descriptor("body.profiles[].createdAt", STRING, "프로필 생성 시간")
+                                       descriptor("body.profiles[].path", STRING, "프로필 경로")
                                )
                        )
                )

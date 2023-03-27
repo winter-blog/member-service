@@ -19,8 +19,7 @@ import java.util.Random;
 
 import static com.devwinter.memberservice.adapter.input.api.AbstractRestDocs.FieldDescriptorDto.descriptor;
 import static com.devwinter.memberservice.adapter.input.api.MemberApiDocumentInfo.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.http.MediaType.*;
@@ -44,7 +43,8 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
     private EditInfoMemberUseCase editInfoMemberUseCase;
     @MockBean
     private UploadMemberProfileUseCase uploadMemberProfileUseCase;
-
+    @MockBean
+    private IntroduceWriteUseCase introduceWriteUseCase;
     @Test
     @DisplayName("회원가입 테스트")
     void createMemberApiTest() throws Exception {
@@ -211,6 +211,36 @@ class MemberCommandApiControllerTest extends AbstractRestDocs {
                                Arrays.asList(
                                        descriptor("result.status", STRING, "결과"),
                                        descriptor("result.message", STRING, "메세지")
+                               )
+                       )
+               )
+               .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 자기소개 작성 테스트")
+    void writeIntroduceApiTest() throws Exception {
+        WriteIntroduce.Request request = new WriteIntroduce.Request("안녕하세요");
+        doNothing().when(introduceWriteUseCase)
+                .write(anyLong(), anyString());
+
+        mockMvc.perform(
+                       post(BASE_URL + "/write-introduce")
+                               .contentType(APPLICATION_JSON)
+                               .content(requestToJson(request))
+                               .headers(auth())
+               )
+               .andDo(print())
+               .andDo(
+                       document(
+                               WRITE_INTRODUCE,
+                               WriteIntroduce.Request.class,
+                               WriteIntroduce.Response.class,
+                               List.of(
+                                       descriptor("introduce", STRING, "자기 소개")
+                               ),
+                               List.of(
+                                       descriptor("result.status", STRING, "결과")
                                )
                        )
                )

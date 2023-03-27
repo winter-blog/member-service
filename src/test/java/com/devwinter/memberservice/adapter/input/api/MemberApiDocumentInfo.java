@@ -10,6 +10,7 @@ public enum MemberApiDocumentInfo {
     CHECK_NICKNAME("회원", "닉네임 중복 검사", "닉네임 중복 검사", "닉네임 중복 검사 API", false),
     CHECK_PASSWORD("회원", "비밀번호 중복 검사", "비밀번호 중복 검사", "비밀번호 중복 검사 API", true),
     MY_PAGE("회원", "마이페이지", "마이페이지", "마이페이지 API", true),
+    WRITE_INTRODUCE("회원", "자기소개 작성", "자기소개 작성", "자기소개 작성 API", true),
     ;
 
     private final String tag;
