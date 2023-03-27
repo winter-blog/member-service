@@ -4,4 +4,5 @@ import com.devwinter.memberservice.domain.Member;
 
 public interface UpdateInfoMemberPort {
     void updateMemberInfo(Member member);
+    void updateIntroduce(Member member);
 }
