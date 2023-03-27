@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.devwinter.memberservice.application.service.exception.MemberErrorCode.*;
 
@@ -23,6 +25,8 @@ public class Member {
     private String password;
     private ProfileCollection profiles;
     private boolean deleted;
+    private String introduce;
+    private LocalDateTime createdAt;
 
     public void changePassword(String newPassword) {
         this.password = newPassword;
@@ -30,24 +34,32 @@ public class Member {
     }
 
     public void delete() {
-        if(this.deleted) {
+        if (this.deleted) {
             throw new MemberException(MEMBER_ALREADY_DELETE);
         }
         this.deleted = true;
     }
 
     public void editInfo(String nickName) {
-        if(this.nickName.equals(nickName)) {
+        if (this.nickName.equals(nickName)) {
             throw new MemberException(MEMBER_NICKNAME_SAME);
         }
         this.nickName = nickName;
     }
 
     public void addProfile(Profile profile) {
-        if(this.profiles == null) {
+        if (this.profiles == null) {
             this.profiles = new ProfileCollection(new ArrayList<>());
         }
         this.profiles.addProfile(profile);
+    }
+
+    public void writeIntroduce(String introduce) {
+        if(Objects.isNull(introduce)) {
+            throw new MemberException(MEMBER_INTRODUCE_NOT_EMPTY);
+        }
+
+        this.introduce = introduce;
     }
 
     public record MemberId(Long value) {
