@@ -4,6 +4,7 @@ import com.devwinter.memberservice.application.port.input.MemberInfoQuery;
 import com.devwinter.memberservice.application.port.output.LoadMemberInfoQueryPort;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,10 @@ import java.util.stream.Collectors;
 public class MemberInfoFindService implements MemberInfoQuery {
 
     private final LoadMemberInfoQueryPort loadMemberInfoQueryPort;
-
+    @Value("${cloud.aws.s3.base-url}")
+    private String baseUrl;
+    @Value("${cloud.aws.s3.profile-prefix}")
+    private String basePrefix;
     @Override
     @Transactional(readOnly = true)
     public Map<Long, MemberInfoDto> query(List<Long> memberIds) {
@@ -29,7 +33,7 @@ public class MemberInfoFindService implements MemberInfoQuery {
                               obj -> new MemberInfoDto(
                                       obj.getId().value(),
                                       obj.getNickName(),
-                                      obj.getProfiles().getMainProfilePath()))
+                                      baseUrl + basePrefix + obj.getProfiles().getMainProfilePath()))
                       );
     }
 }
