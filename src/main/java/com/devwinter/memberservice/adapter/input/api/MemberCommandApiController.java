@@ -21,6 +21,7 @@ public class MemberCommandApiController {
     private final DeleteMemberUseCase deleteMemberUseCase;
     private final EditInfoMemberUseCase editInfoMemberUseCase;
     private final UploadMemberProfileUseCase uploadMemberProfileUseCase;
+    private final IntroduceWriteUseCase introduceWriteUseCase;
 
     @PostMapping
     public BaseResponse<CreateMember.Response> createMember(
@@ -57,5 +58,13 @@ public class MemberCommandApiController {
             @RequestPart("profile") MultipartFile profile) {
         uploadMemberProfileUseCase.uploadProfile(new UploadMemberProfileCommand(memberId, profile));
         return AddProfileMember.Response.success();
+    }
+
+    @PostMapping("/write-introduce")
+    public BaseResponse<WriteIntroduce.Response> writeIntroduce(
+            @RequestHeader("MemberId") Long memberId,
+            @Valid @RequestBody WriteIntroduce.Request request) {
+        introduceWriteUseCase.write(memberId, request.getIntroduce());
+        return WriteIntroduce.Response.success();
     }
 }

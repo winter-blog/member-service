@@ -19,6 +19,8 @@ public class MemberMyPage {
         private Long memberId;
         private String email;
         private String nickName;
+        private String introduce;
+        private String createdAt;
         private List<MemberProfileResponse> profiles;
 
         public static BaseResponse<MemberMyPage.Response> success(MyPageMemberDto memberDto) {
@@ -27,6 +29,8 @@ public class MemberMyPage {
                     memberDto.memberId(),
                     memberDto.email(),
                     memberDto.nickName(),
+                    memberDto.introduce(),
+                    StringConverter.localDateTimeToLocalDateString(memberDto.createdAt()),
                     memberDto.profiles().stream().map(MemberProfileResponse::of)
                             .collect(Collectors.toList())
             ));
@@ -38,10 +42,10 @@ public class MemberMyPage {
     private static class MemberProfileResponse {
 
         private String path;
-        private String createdAt;
+
 
         public static MemberProfileResponse of(ProfileDto dto) {
-            return new MemberProfileResponse(dto.path(), StringConverter.localDateTimeToLocalDateTimeString(dto.createdAt()));
+            return new MemberProfileResponse(dto.path());
         }
 
     }
