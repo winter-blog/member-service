@@ -7,6 +7,8 @@ import com.devwinter.memberservice.domain.ProfileCollection;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
+
 
 @Getter
 @Entity
@@ -25,6 +27,7 @@ public class MemberJpaEntity extends BaseTimeEntity {
     private boolean deleted;
     @Embedded
     private MemberProfileCollectionJpaEntity profiles;
+    private String introduce;
 
     public MemberJpaEntity(Member member) {
         if(member.getId() != null) {
@@ -43,9 +46,15 @@ public class MemberJpaEntity extends BaseTimeEntity {
         }
     }
 
-    public void updateInfo(Member member) {
+    public void updateNickname(Member member) {
         if(!this.nickName.equals(member.getNickName())) {
             this.nickName = member.getNickName();
+        }
+    }
+
+    public void updateIntroduce(String introduce) {
+        if(Objects.nonNull(introduce)) {
+            this.introduce = introduce;
         }
     }
 

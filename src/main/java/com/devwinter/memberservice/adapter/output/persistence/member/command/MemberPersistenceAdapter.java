@@ -3,13 +3,10 @@ package com.devwinter.memberservice.adapter.output.persistence.member.command;
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberMapper;
 import com.devwinter.memberservice.application.port.output.*;
-import com.devwinter.memberservice.application.service.exception.MemberErrorCode;
-import com.devwinter.memberservice.application.service.exception.MemberException;
 import com.devwinter.memberservice.domain.Member;
 import com.devwinter.memberservice.domain.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -40,7 +37,13 @@ public class MemberPersistenceAdapter implements SaveMemberPort, UpdatePasswordM
     @Override
     public void updateMemberInfo(Member member) {
         MemberJpaEntity memberJpaEntity = findMemberById(member.getId().value());
-        memberJpaEntity.updateInfo(member);
+        memberJpaEntity.updateNickname(member);
+    }
+
+    @Override
+    public void updateIntroduce(Member member) {
+        MemberJpaEntity memberJpaEntity = findMemberById(member.getId().value());
+        memberJpaEntity.updateIntroduce(member.getIntroduce());
     }
 
     @Override

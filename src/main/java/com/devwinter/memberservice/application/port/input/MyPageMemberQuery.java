@@ -12,12 +12,14 @@ public interface MyPageMemberQuery {
 
     MyPageMemberDto getMemberInfo(Long memberId);
 
-    record MyPageMemberDto(Long memberId, String email, String nickName, List<ProfileDto> profiles) {
+    record MyPageMemberDto(Long memberId, String email, String nickName, String introduce, LocalDateTime createdAt, List<ProfileDto> profiles) {
         public static MyPageMemberDto of(Member member, String baseUrl) {
             return new MyPageMemberDto(
                     member.getId().value(),
                     member.getEmail(),
                     member.getNickName(),
+                    member.getIntroduce(),
+                    member.getCreatedAt(),
                     member.getProfiles()
                           .getProfiles()
                           .stream()

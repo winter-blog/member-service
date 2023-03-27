@@ -24,6 +24,8 @@ public class MemberMapper {
                      .nickName(memberJpaEntity.getNickName())
                      .email(memberJpaEntity.getEmail())
                      .password(memberJpaEntity.getPassword())
+                     .introduce(memberJpaEntity.getIntroduce())
+                     .createdAt(memberJpaEntity.getCreatedAt())
                      .profiles(new ProfileCollection(memberJpaEntity.getProfiles().getProfiles().stream()
                                                                     .map(p -> new Profile(
                                                                             p.getId(),
