@@ -2,7 +2,6 @@ package com.devwinter.memberservice.adapter.output.persistence.member.query;
 
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberJpaEntity;
 import com.devwinter.memberservice.adapter.output.persistence.member.entity.MemberMapper;
-import com.devwinter.memberservice.application.port.output.LoadMemberInfoQueryPort;
 import com.devwinter.memberservice.application.port.output.LoadMemberQueryPort;
 import com.devwinter.memberservice.application.port.output.JoinDuplicateCheckQueryPort;
 import com.devwinter.memberservice.application.service.exception.MemberException;
@@ -17,7 +16,7 @@ import static com.devwinter.memberservice.application.service.exception.MemberEr
 
 @Component
 @RequiredArgsConstructor
-public class MemberQueryAdapter implements LoadMemberQueryPort, JoinDuplicateCheckQueryPort, LoadMemberInfoQueryPort {
+public class MemberQueryAdapter implements LoadMemberQueryPort, JoinDuplicateCheckQueryPort {
 
     private final MemberQueryRepository memberQueryRepository;
     private final MemberMapper memberMapper;

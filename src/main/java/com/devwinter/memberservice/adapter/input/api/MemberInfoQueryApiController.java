@@ -16,8 +16,13 @@ public class MemberInfoQueryApiController {
 
     private final MemberInfoQuery memberInfoQuery;
 
-    @GetMapping("/info/{memberIds}")
+    @GetMapping("/info/{memberIds}/multiple")
     public Map<Long, MemberInfoQuery.MemberInfoDto> info(@PathVariable List<Long> memberIds) {
         return memberInfoQuery.query(memberIds);
+    }
+
+    @GetMapping("/info/{memberId}")
+    public MemberInfoQuery.MemberInfoDto info(@PathVariable Long memberId) {
+        return memberInfoQuery.query(memberId);
     }
 }
