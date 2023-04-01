@@ -31,14 +31,14 @@ pipeline {
             }
         }
 
-        stage('Gradle Build') {
-          steps {
-                sh "chmod +x gradlew"
-                sh """
-                   ./gradlew clean build bootJar -x test
-                   """
-            }
-        }
+//         stage('Gradle Build') {
+//           steps {
+//                 sh "chmod +x gradlew"
+//                 sh """
+//                    ./gradlew clean build bootJar -x test
+//                    """
+//             }
+//         }
 
         stage('Open Api 3') {
           steps {
@@ -83,6 +83,5 @@ pipeline {
                  sh "$SCP_CMD $SOURCE_FILE $REMOTE$TARGET_DIRECTORY"
            }
          }
-
     }
 }

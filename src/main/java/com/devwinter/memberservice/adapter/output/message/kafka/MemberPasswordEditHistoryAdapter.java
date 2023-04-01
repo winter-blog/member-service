@@ -4,14 +4,14 @@ import com.devwinter.memberservice.adapter.output.message.kafka.utils.MemberChan
 import com.devwinter.memberservice.application.port.output.history.MemberPasswordEditHistoryPort;
 import com.devwinter.memberservice.domain.Member;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
+// import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class MemberPasswordEditHistoryAdapter implements MemberPasswordEditHistoryPort {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    // private final KafkaTemplate<String, String> kafkaTemplate;
     private final MemberChangePasswordSchema kafka;
 
     @Override
@@ -19,6 +19,6 @@ public class MemberPasswordEditHistoryAdapter implements MemberPasswordEditHisto
         String jsonInString = kafka.createMessage(new MemberPasswordEditHistoryCommand(member.getId().value(),
                 member.getPassword(), originalPassword));
 
-        kafkaTemplate.send(kafka.getTopics(), jsonInString);
+        // kafkaTemplate.send(kafka.getTopics(), jsonInString);
     }
 }

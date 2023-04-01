@@ -30,7 +30,7 @@ public class Member {
 
     public void changePassword(String newPassword) {
         this.password = newPassword;
-        Events.raise(new PasswordChangeEvent(this.getId().value, this.getEmail()));
+        // Events.raise(new PasswordChangeEvent(this.getId().value, this.getEmail()));
     }
 
     public void delete() {
