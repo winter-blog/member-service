@@ -20,6 +20,8 @@ pipeline {
         SCP_CMD = 'scp -i /var/lib/jenkins/.ssh/jenkins.pem'
         SOURCE_FILE = 'build/api-spec/member-api-spec.yaml'
         TARGET_DIRECTORY = ':docs'
+
+        DISCORD_WEBHOOK_URL = credentials("discord_webhook")
     }
 
     stages {
@@ -31,14 +33,14 @@ pipeline {
             }
         }
 
-//         stage('Gradle Build') {
-//           steps {
-//                 sh "chmod +x gradlew"
-//                 sh """
-//                    ./gradlew clean build bootJar -x test
-//                    """
-//             }
-//         }
+         stage('Gradle Build') {
+           steps {
+                 sh "chmod +x gradlew"
+                 sh """
+                    ./gradlew clean build bootJar -x test
+                    """
+             }
+         }
 
         stage('Open Api 3') {
           steps {
@@ -58,15 +60,6 @@ pipeline {
             }
         }
 
-//         stage("OpenApi3 Dockerize") {
-//             steps {
-//                 sh "docker build -t $apiRepository -f Dockerfile.openapi3 ."
-//                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                 sh "docker push $apiRepository"
-//                 sh "docker rmi $apiRepository"
-//             }
-//         }
-
         stage("Deploy to EC2") {
             steps {
                   sh "$SSH_CMD $REMOTE 'docker pull $repository'"
@@ -84,4 +77,21 @@ pipeline {
            }
          }
     }
+
+     post {
+            success {
+                discordSend title: "Member Service CI/CD 알림",
+                            description: "member-service CI/CD 결과",
+                            footer: "member-service 빌드 및 배포에 성공했습니다.",
+                            link: env.BUILD_URL, result: currentBuild.currentResult,
+                            webhookURL: env.DISCORD_WEBHOOK_URL
+            }
+            failure {
+                discordSend title: "Member Service CI/CD 알림",
+                            description: "member-service CI/CD 결과",
+                            footer: "member-service 빛드 및 배포에 실패했습니다.",
+                            link: env.BUILD_URL, result: currentBuild.currentResult,
+                            webhookURL: env.DISCORD_WEBHOOK_URL
+            }
+     }
 }
